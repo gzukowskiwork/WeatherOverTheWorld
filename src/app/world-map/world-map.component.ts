@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Map, View} from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import {OSM} from 'ol/source';
@@ -14,8 +14,13 @@ import GeoJSON from 'ol/format/GeoJSON';
   templateUrl: './world-map.component.html',
   styleUrls: ['./world-map.component.css']
 })
+
 export class WorldMapComponent implements OnInit {
   map: Map;
+  showForecast = false;
+  hdms: string;
+  @Output() showForecastRequest = new EventEmitter<boolean>();
+  @Output() emitujWspolrzedne = new EventEmitter<string>();
 
   constructor() { }
 
@@ -44,9 +49,9 @@ export class WorldMapComponent implements OnInit {
 
     const geojsonCities = new VectorLayer({
       source: new VectorSource({
-        url: '',
+        url: 'https://raw.githack.com/gzukowskiwork/WeatherOverTheWorld/main/src/app/geojson-data/poland-cities.geojson',
         format: new GeoJSON()
-      })
+      }),
     });
 
     this.map = new Map({
@@ -62,17 +67,19 @@ export class WorldMapComponent implements OnInit {
       }),
     });
 
-
-
-
     this.map.on('singleclick',  (evt) => {
       const coordinate = evt.coordinate;
-      const hdms = toStringXY(toLonLat(coordinate), 5);
+      this.hdms = toStringXY(toLonLat(coordinate), 5);
 
-      content.innerHTML = '<p> Current coordinates are: </p> <code>' + hdms + '</code>';
+      content.innerHTML = '<p> Current coordinates are: </p> <code>' + this.hdms + '</code>';
       overlay.setPosition(coordinate);
     });
   }
 
+  onShowWeatherForecastClicked(): void{
+    this.showForecast = !this.showForecast;
+    this.showForecastRequest.emit(this.showForecast);
+    this.emitujWspolrzedne.emit(this.hdms);
+  }
 
 }

@@ -1,4 +1,15 @@
-<app-header></app-header>
-<app-world-map></app-world-map>
-<app-weather-popup></app-weather-popup>
-<app-weather-forecast></app-weather-forecast>
+<div class="container">
+  <app-header></app-header>
+  <div class="row">
+    <div class="col-1">asd</div>
+    <div class="col-8">
+      <app-world-map (showForecastRequest)="onWeatherForecastRequested($event)" (emitujWspolrzedne)="onEmitujWspolrzedneRequest($event)"></app-world-map>
+    </div>
+
+  </div>
+  <div class="row">
+    <app-weather-forecast *ngIf="iGetBool" [wspolrzedne]="wspol"></app-weather-forecast>
+  </div>
+</div>
+
+

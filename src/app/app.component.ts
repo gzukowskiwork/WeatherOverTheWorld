@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'WeatherAroundTheWorld';
+  iGetBool: boolean;
+  wspol: string;
+
+  onWeatherForecastRequested(wartosc: any): void {
+    //console.log(wartosc);
+    this.iGetBool = wartosc;
+  }
+
+  onEmitujWspolrzedneRequest(wspolrzedne: string): void {
+    //console.log(wspolrzedne);
+    this.wspol = wspolrzedne;
+  }
 }
