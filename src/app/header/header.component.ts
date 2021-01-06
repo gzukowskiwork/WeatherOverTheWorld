@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
   toggleCities(): void {
     this.showCities = !this.showCities;
     this.citiesChange.emit(this.showCities);
-    //console.log(this.showCities);
   }
 
 }

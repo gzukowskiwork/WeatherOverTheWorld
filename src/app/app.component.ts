@@ -7,22 +7,19 @@ import {Component, Input} from '@angular/core';
 })
 export class AppComponent {
   iGetBool: boolean;
-  wspol: string;
-  changeVisibilityofCities: boolean;
+  coordinates: string;
+  changeVisibilityOfCities: boolean;
 
 
-  onWeatherForecastRequested(wartosc: any): void {
-    //console.log(wartosc);
-    this.iGetBool = wartosc;
+  onWeatherForecastRequested(showForecast: any): void {
+    this.iGetBool = showForecast;
   }
 
-  onEmitujWspolrzedneRequest(wspolrzedne: string): void {
-    //console.log(wspolrzedne);
-    this.wspol = wspolrzedne;
+  onCoordinatesEmitRequest(coordinates: string): void {
+    this.coordinates = coordinates;
   }
 
-  citiesChanged(eve: boolean) {
-    //console.log(eve);
-    this.changeVisibilityofCities = eve;
+  citiesChanged(eve: boolean): void {
+    this.changeVisibilityOfCities = eve;
   }
 }

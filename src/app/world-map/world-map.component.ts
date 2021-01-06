@@ -19,17 +19,17 @@ export class WorldMapComponent implements OnInit {
   map: Map;
   showForecast = false;
   hdms: string;
-  geojsonCities: VectorLayer;
-  tileLayer: TileLayer;
+  private geojsonUrl = 'https://raw.githack.com/gzukowskiwork/WeatherOverTheWorld/main/src/app/geojson-data/poland-cities.geojson';
+
   @Input() showCities: boolean;
-  pipa = true;
   @Output() showForecastRequest = new EventEmitter<boolean>();
-  @Output() emitujWspolrzedne = new EventEmitter<string>();
+  @Output() emitCoordinates = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit(): void {
     this.initializeMap();
+
   }
 
   initializeMap(): void {
@@ -37,22 +37,28 @@ export class WorldMapComponent implements OnInit {
     const container = document.getElementById('popup');
     const closer = document.getElementById('popup-closer');
 
-    const overlay = new Overlay({
-      element: container,
-      autoPan: true,
-      autoPanAnimation: {
-        duration: 250,
-      },
-    });
+    const overlay = this.createOverlay(container);
 
-    closer.onclick = () => {
-      overlay.setPosition(undefined);
-      closer.blur();
-      return false;
-    };
+    this.closeCoordinatesPopup(closer, overlay);
 
+    this.setMapProperties(overlay);
+
+    this.addLayersToMap();
+
+    this.showCoordinatePopup(content, overlay);
+  }
+
+  private addLayersToMap(): void {
+    this.map.addLayer(this.geoJsonVectorLayer());
+  }
+
+  private setMapProperties(overlay: Overlay): void {
     this.map = new Map({
-      layers: this.dupa(),
+      layers: [
+        new TileLayer({
+          source: new OSM()
+        }),
+      ],
       overlays: [overlay],
       target: 'map',
       view: new View({
@@ -60,8 +66,10 @@ export class WorldMapComponent implements OnInit {
         zoom: 2
       }),
     });
+  }
 
-    this.map.on('singleclick',  (evt) => {
+  private showCoordinatePopup(content: HTMLElement, overlay: Overlay): void {
+    this.map.on('singleclick', (evt) => {
       const coordinate = evt.coordinate;
       this.hdms = toStringXY(toLonLat(coordinate), 5);
 
@@ -70,38 +78,53 @@ export class WorldMapComponent implements OnInit {
     });
   }
 
+  private geoJsonVectorLayer(): VectorLayer {
+    const geo = new VectorLayer({
+      source: new VectorSource({
+        url: this.geojsonUrl,
+        format: new GeoJSON()
+      }),
+
+    });
+    return geo;
+  }
+
+  private closeCoordinatesPopup(closer: HTMLElement, overlay: Overlay): void {
+    closer.onclick = () => {
+      overlay.setPosition(undefined);
+      closer.blur();
+      return false;
+    };
+  }
+
+  private createOverlay(container: HTMLElement): Overlay {
+    const overlay = new Overlay({
+      element: container,
+      autoPan: true,
+      autoPanAnimation: {
+        duration: 250,
+      },
+    });
+    return overlay;
+  }
+
   onShowWeatherForecastClicked(): void{
-    this.showForecast = !this.showForecast;
+    this.showForecast = true;
+
+    if (this.showForecast){
     this.showForecastRequest.emit(this.showForecast);
-    this.emitujWspolrzedne.emit(this.hdms);
-  }
-  toggle(): boolean{
-    if(this.showCities){
-      this.pipa = true;
-      return this.pipa;
-    } else {
-      this.pipa = false;
-      return this.pipa;
+    this.emitCoordinates.emit(this.hdms);
     }
   }
-  dupa(): any{
-    if (this.toggle()) {
-      this.geojsonCities = new VectorLayer({
-        source: new VectorSource({
-          url: 'https://raw.githack.com/gzukowskiwork/WeatherOverTheWorld/main/src/app/geojson-data/poland-cities.geojson',
-          format: new GeoJSON()
-        }),
-      });
-      this.tileLayer =  new TileLayer({
-        source: new OSM()
-      });
-      return [this.tileLayer, this.geojsonCities];
-    }else {
-      this.tileLayer =  new TileLayer({
-        source: new OSM()
-      });
-      return [this.tileLayer];
+
+  hideWeatherForecast(): void {
+    this.showForecast = false;
+
+    if (!this.showForecast){
+      this.showForecastRequest.emit(this.showForecast);
+      this.emitCoordinates.emit(this.hdms);
     }
   }
+
 
 }
