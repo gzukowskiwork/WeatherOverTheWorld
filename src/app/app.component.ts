@@ -8,6 +8,8 @@ import {Component, Input} from '@angular/core';
 export class AppComponent {
   iGetBool: boolean;
   wspol: string;
+  changeVisibilityofCities: boolean;
+
 
   onWeatherForecastRequested(wartosc: any): void {
     //console.log(wartosc);
@@ -17,5 +19,10 @@ export class AppComponent {
   onEmitujWspolrzedneRequest(wspolrzedne: string): void {
     //console.log(wspolrzedne);
     this.wspol = wspolrzedne;
+  }
+
+  citiesChanged(eve: boolean) {
+    //console.log(eve);
+    this.changeVisibilityofCities = eve;
   }
 }

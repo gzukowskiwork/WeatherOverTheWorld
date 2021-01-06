@@ -1,9 +1,11 @@
 <div class="container">
-  <app-header></app-header>
+  <app-header (citiesChange)="citiesChanged($event)"></app-header>
   <div class="row">
     <div class="col-1">asd</div>
     <div class="col-8">
-      <app-world-map (showForecastRequest)="onWeatherForecastRequested($event)" (emitujWspolrzedne)="onEmitujWspolrzedneRequest($event)"></app-world-map>
+      <app-world-map (showForecastRequest)="onWeatherForecastRequested($event)"
+                     (emitujWspolrzedne)="onEmitujWspolrzedneRequest($event)"
+                     [showCities]="changeVisibilityofCities"></app-world-map>
     </div>
 
   </div>

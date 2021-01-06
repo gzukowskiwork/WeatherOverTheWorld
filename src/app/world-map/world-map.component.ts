@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Map, View} from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import {OSM} from 'ol/source';
@@ -19,6 +19,10 @@ export class WorldMapComponent implements OnInit {
   map: Map;
   showForecast = false;
   hdms: string;
+  geojsonCities: VectorLayer;
+  tileLayer: TileLayer;
+  @Input() showCities: boolean;
+  pipa = true;
   @Output() showForecastRequest = new EventEmitter<boolean>();
   @Output() emitujWspolrzedne = new EventEmitter<string>();
 
@@ -47,18 +51,8 @@ export class WorldMapComponent implements OnInit {
       return false;
     };
 
-    const geojsonCities = new VectorLayer({
-      source: new VectorSource({
-        url: 'https://raw.githack.com/gzukowskiwork/WeatherOverTheWorld/main/src/app/geojson-data/poland-cities.geojson',
-        format: new GeoJSON()
-      }),
-    });
-
     this.map = new Map({
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        }), geojsonCities],
+      layers: this.dupa(),
       overlays: [overlay],
       target: 'map',
       view: new View({
@@ -80,6 +74,34 @@ export class WorldMapComponent implements OnInit {
     this.showForecast = !this.showForecast;
     this.showForecastRequest.emit(this.showForecast);
     this.emitujWspolrzedne.emit(this.hdms);
+  }
+  toggle(): boolean{
+    if(this.showCities){
+      this.pipa = true;
+      return this.pipa;
+    } else {
+      this.pipa = false;
+      return this.pipa;
+    }
+  }
+  dupa(): any{
+    if (this.toggle()) {
+      this.geojsonCities = new VectorLayer({
+        source: new VectorSource({
+          url: 'https://raw.githack.com/gzukowskiwork/WeatherOverTheWorld/main/src/app/geojson-data/poland-cities.geojson',
+          format: new GeoJSON()
+        }),
+      });
+      this.tileLayer =  new TileLayer({
+        source: new OSM()
+      });
+      return [this.tileLayer, this.geojsonCities];
+    }else {
+      this.tileLayer =  new TileLayer({
+        source: new OSM()
+      });
+      return [this.tileLayer];
+    }
   }
 
 }
