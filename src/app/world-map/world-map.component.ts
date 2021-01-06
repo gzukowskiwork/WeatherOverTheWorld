@@ -25,6 +25,15 @@ export class WorldMapComponent implements OnInit {
   @Output() showForecastRequest = new EventEmitter<boolean>();
   @Output() emitCoordinates = new EventEmitter<string>();
 
+  private static createOverlay(container: HTMLElement): Overlay {
+    return new Overlay({
+      element: container,
+      autoPan: true,
+      autoPanAnimation: {
+        duration: 250,
+      },
+    });
+  }
   constructor() { }
 
   ngOnInit(): void {
@@ -37,7 +46,7 @@ export class WorldMapComponent implements OnInit {
     const container = document.getElementById('popup');
     const closer = document.getElementById('popup-closer');
 
-    const overlay = this.createOverlay(container);
+    const overlay = WorldMapComponent.createOverlay(container);
 
     this.closeCoordinatesPopup(closer, overlay);
 
@@ -95,17 +104,6 @@ export class WorldMapComponent implements OnInit {
       closer.blur();
       return false;
     };
-  }
-
-  private createOverlay(container: HTMLElement): Overlay {
-    const overlay = new Overlay({
-      element: container,
-      autoPan: true,
-      autoPanAnimation: {
-        duration: 250,
-      },
-    });
-    return overlay;
   }
 
   onShowWeatherForecastClicked(): void{
