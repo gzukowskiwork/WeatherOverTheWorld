@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { WeatherPopupComponent } from './weather/weather-popup/weather-popup.component';
 import { WorldMapComponent } from './world-map/world-map.component';
 import { HeaderComponent } from './header/header.component';
 import { WeatherForecastComponent } from './weather/weather-forecast/weather-forecast.component';
+import { PlaceListComponent } from './place/place-list/place-list.component';
 
 @NgModule({
   declarations: [
@@ -13,10 +14,11 @@ import { WeatherForecastComponent } from './weather/weather-forecast/weather-for
     WeatherPopupComponent,
     WorldMapComponent,
     HeaderComponent,
-    WeatherForecastComponent
+    WeatherForecastComponent,
+    PlaceListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,8 +10,7 @@ export class AppComponent {
   coordinates: string;
   changeVisibilityOfCities: boolean;
 
-
-  onWeatherForecastRequested(showForecast: any): void {
+  onWeatherForecastRequested(showForecast: boolean): void {
     this.iGetBool = showForecast;
   }
 
