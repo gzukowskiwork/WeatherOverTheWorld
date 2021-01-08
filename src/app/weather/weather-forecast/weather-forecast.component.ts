@@ -1,8 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {LoggingService} from '../../shared/logging.service';
-import {HttpClient} from '@angular/common/http';
 import {CoordinateService} from '../../shared/coordinate.service';
-import {WeatherDataMain} from '../../shared/models/weather-data-main';
 import {WeatherService} from '../../shared/weather.service';
 
 @Component({
@@ -12,31 +10,38 @@ import {WeatherService} from '../../shared/weather.service';
   providers: [LoggingService, CoordinateService]
 })
 
-export class WeatherForecastComponent implements OnInit {
-  title = 'prognoza pogody';
-  public main: WeatherDataMain;
+export class WeatherForecastComponent implements OnInit, OnChanges {
+  title = 'weather forecast';
+
+  public main: any;
   @Input() obtainedCoordinates: string;
   constructor(private loggingService: LoggingService,
               private coordinateService: CoordinateService,
               private weatherService: WeatherService) { }
 
   ngOnInit(): void {
+    this.getWeather();
   }
 
-  showCoordinates(): string[]{
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes[this.obtainedCoordinates]){
+      this.showCoordinates();
+    }
+  }
+
+  showCoordinates(): {longitude: string, latitude: string} {
     return this.coordinateService.reverseCoordinatesToLatLon(this.obtainedCoordinates);
   }
 
-  getWeather() {
-    const lat = this.coordinateService.reverseCoordinatesToLatLon(this.showCoordinates()[0]);
-    const lon = this.coordinateService.reverseCoordinatesToLatLon(this.showCoordinates()[1]);
-    console.log(lon);
+  getWeather(): void {
+    const lat = this.showCoordinates().longitude;
+    const lon = this.showCoordinates().latitude;
 
-    // this.weatherService.getCurrenttWeather(lat, lon)
-    //   .subscribe(x => {
-    //   this.main = x as WeatherDataMain;
-    // });
-    }
-
+    this.weatherService.getForecast(lat, lon)
+      .subscribe(x => {
+        this.main = x as any;
+      });
+    console.log('request send');
+  }
 
 }

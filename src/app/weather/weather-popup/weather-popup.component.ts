@@ -1,8 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {LoggingService} from '../../shared/logging.service';
 import {CoordinateService} from '../../shared/coordinate.service';
 import {WeatherService} from '../../shared/weather.service';
-import {WeatherDataMain} from '../../shared/models/weather-data-main';
 
 @Component({
   selector: 'app-weather-popup',
@@ -11,30 +9,28 @@ import {WeatherDataMain} from '../../shared/models/weather-data-main';
   providers: [CoordinateService]
 })
 export class WeatherPopupComponent implements OnInit {
-  public main: WeatherDataMain;
+  public main: any;
 
   constructor(private coordinateService: CoordinateService,
               private weatherService: WeatherService) { }
 
   @Input() coordinates: string;
   ngOnInit(): void {
-
+    this.getWeather();
   }
 
-  justATestMethod(): string[]{
+  showCoordinates(): {longitude: string, latitude: string} {
     return this.coordinateService.reverseCoordinatesToLatLon(this.coordinates);
   }
 
-  getWeather() {
-    // const lat = this.coordinateService.reverseCoordinatesToLatLon(this.coordinates)[0];
-    // const lon = this.coordinateService.reverseCoordinatesToLatLon(this.coordinates)[0];
+  getWeather(): void {
+    const lat = this.showCoordinates().longitude;
+    const lon = this.showCoordinates().latitude;
 
-    // this.weatherService.getCurrenttWeather(lat, lon)
-    //   .subscribe(x => {
-    //   this.main = x as WeatherDataMain;
-    // });
-    console.log(this.coordinates);
-    //console.log(this.justATestMethod()[1]);
+    this.weatherService.getCurrenttWeather(lat, lon)
+      .subscribe(x => {
+        this.main = x as any;
+      });
   }
 
 }

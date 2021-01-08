@@ -1,6 +1,12 @@
 <div>
   <p>{{title}}</p>
-  <p>Latitude: {{showCoordinates()[0]}}</p>
-  <p>Longitude: {{showCoordinates()[1]}}</p>
+  <p>{{obtainedCoordinates}}</p>
+  <p>Latitude: {{showCoordinates().latitude}}</p>
+  <p>Longitude: {{showCoordinates().longitude}}</p>
+<!--  <p>Longitude: {{showCoordinates()[1]}}</p>-->
 </div>
-<div>{{getWeather()}}</div>
+<div *ngFor="let aa of main.list">
+<div>
+  {{aa.dt*1000 | date:'MMM d, y, h:mm a'}}
+  {{aa.main.temp}}</div>
+</div>

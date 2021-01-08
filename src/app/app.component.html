@@ -7,11 +7,11 @@
                      (emitCoordinates)="onCoordinatesEmitRequest($event)"
                      [showCities]="changeVisibilityOfCities"></app-world-map>
     </div>
-
   </div>
   <div class="row">
     <app-weather-forecast *ngIf="iGetBool" [obtainedCoordinates]="coordinates"></app-weather-forecast>
   </div>
+
   <div class="row">
     <app-place-list></app-place-list>
   </div>

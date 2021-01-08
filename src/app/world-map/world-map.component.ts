@@ -1,16 +1,13 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Feature, Map, View} from 'ol';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Map, View} from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import {OSM} from 'ol/source';
 import {toStringXY} from 'ol/coordinate';
-import {fromLonLat, toLonLat} from 'ol/proj';
+import {toLonLat} from 'ol/proj';
 import Overlay from 'ol/Overlay';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
-import Style from 'ol/style/Style';
-import {Icon} from 'ol/style';
-import {Point} from 'ol/geom';
 
 @Component({
   selector: 'app-world-map',
@@ -18,15 +15,25 @@ import {Point} from 'ol/geom';
   styleUrls: ['./world-map.component.css']
 })
 
-export class WorldMapComponent implements OnInit, AfterViewInit {
+export class WorldMapComponent implements OnInit {
   map: Map;
   showForecast = false;
   hdms: string;
   private geojsonUrl = 'https://raw.githack.com/drei01/geojson-world-cities/master/cities.geojson';
-  @Input() showCities: boolean = false;
+  private _showCities: boolean;
+
+  @Input() set showCities(value: boolean){
+    this._showCities = value;
+    this.updateVisibility();
+  }
+  get showCities(): boolean{
+    return this._showCities;
+  }
+
+
   @Output() showForecastRequest = new EventEmitter<boolean>();
   @Output() emitCoordinates = new EventEmitter<string>();
-
+  layer: VectorLayer;
 
   private static createOverlay(container: HTMLElement): Overlay {
     return new Overlay({
@@ -43,9 +50,6 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
     this.initializeMap();
 
   }
-  ngAfterViewInit(): void {
-    console.log(this.showCities);
-  }
 
 
   initializeMap(): void {
@@ -58,8 +62,8 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
     this.closeCoordinatesPopup(closer, overlay);
 
     this.setMapProperties(overlay);
-    // this.warstwa = this.geoJsonVectorLayer();
-    // this.map.addLayer(this.warstwa);
+    this.layer = this.geoJsonVectorLayer();
+    this.map.addLayer(this.layer);
 
 
     this.addLayersToMap();
@@ -91,7 +95,6 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
     this.map.on('singleclick', (evt) => {
       const coordinate = evt.coordinate;
       this.hdms = toStringXY(toLonLat(coordinate), 5);
-      // content.innerHTML = '<p> Current coordinates are: </p> <code>' + this.hdms + '</code>';
       overlay.setPosition(coordinate);
     });
   }
@@ -101,10 +104,14 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
       source: new VectorSource({
         url: this.geojsonUrl,
         format: new GeoJSON()
-      })
+      }),
+      visible: false
     });
   }
-
+  updateVisibility(): void{
+    this.layer.setVisible(this._showCities);
+    console.log(this._showCities);
+  }
   private closeCoordinatesPopup(closer: HTMLElement, overlay: Overlay): void {
     closer.onclick = () => {
       overlay.setPosition(undefined);
@@ -120,6 +127,7 @@ export class WorldMapComponent implements OnInit, AfterViewInit {
     this.showForecastRequest.emit(this.showForecast);
     this.emitCoordinates.emit(this.hdms);
     }
+    this.showForecast = false;
   }
 
   hideWeatherForecast(): void {
