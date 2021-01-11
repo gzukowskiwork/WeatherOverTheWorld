@@ -1,0 +1,14 @@
+Weather components
+Current weather in pointed place
+Weather forecast in pointed place - charts
+on click "show weather forecast" if forecast is visible, refresh forecast to new coordinates
+
+Places component
+CRUD for places - reactive forms
+
+Map component
+Show Places on map as point
+Emit city name gathered from geojson
+
+Tourist info
+Use Youtube api or some tourist api to fetch tourist data about selected city

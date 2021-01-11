@@ -108,10 +108,12 @@ export class WorldMapComponent implements OnInit {
       visible: false
     });
   }
-  updateVisibility(): void{
+
+  private updateVisibility(): void{
     this.layer.setVisible(this._showCities);
     console.log(this._showCities);
   }
+
   private closeCoordinatesPopup(closer: HTMLElement, overlay: Overlay): void {
     closer.onclick = () => {
       overlay.setPosition(undefined);
@@ -123,19 +125,16 @@ export class WorldMapComponent implements OnInit {
   onShowWeatherForecastClicked(): void{
     this.showForecast = true;
 
-    if (this.showForecast){
     this.showForecastRequest.emit(this.showForecast);
     this.emitCoordinates.emit(this.hdms);
-    }
-    this.showForecast = false;
   }
 
   hideWeatherForecast(): void {
     this.showForecast = false;
 
-    if (!this.showForecast){
-      this.showForecastRequest.emit(this.showForecast);
-      this.emitCoordinates.emit(this.hdms);
-    }
+    this.showForecastRequest.emit(this.showForecast);
+    this.emitCoordinates.emit(this.hdms);
   }
+
+
 }

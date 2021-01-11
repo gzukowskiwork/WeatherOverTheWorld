@@ -1,5 +1,5 @@
 .map {
-  height: 500px;
+  height: 600px;
   width: 100%;
 }
 .ol-popup {
@@ -11,7 +11,7 @@
   border: 1px solid #cccccc;
   bottom: 12px;
   left: -50px;
-  min-width: 280px;
+  min-width: 380px;
 }
 .ol-popup:after, .ol-popup:before {
   top: 100%;

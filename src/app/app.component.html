@@ -1,19 +1,23 @@
 <div class="container">
   <app-header (citiesChange)="citiesChanged($event)"></app-header>
   <div class="row">
-    <div class="col-2">asd</div>
+    <div class="col-2">
+      <app-city-detail></app-city-detail>
+    </div>
     <div class="col-10">
       <app-world-map (showForecastRequest)="onWeatherForecastRequested($event)"
                      (emitCoordinates)="onCoordinatesEmitRequest($event)"
                      [showCities]="changeVisibilityOfCities"></app-world-map>
     </div>
   </div>
+  <br>
   <div class="row">
-    <app-weather-forecast *ngIf="iGetBool" [obtainedCoordinates]="coordinates"></app-weather-forecast>
-  </div>
-
-  <div class="row">
-    <app-place-list></app-place-list>
+      <div class="col-7">
+        <app-weather-forecast *ngIf="iGetBool" [obtainedCoordinates]="coordinates"></app-weather-forecast>
+      </div>
+    <div class="col-5">
+      <app-place-list></app-place-list>
+    </div>
   </div>
 </div>
 

@@ -1,5 +1,35 @@
-<p>place-list works!</p>
-<div *ngFor="let place of places">
-<p>{{place.name}}</p>
-  <p>{{place.description}}</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="table table-dark table-hover table-sm">
+      <thead>
+        <tr>
+          <th>Nazwa</th>
+<!--          <th>Opis</th>-->
+<!--          <th>Długość WGS84</th>-->
+<!--          <th>Szerokość WGS84</th><th>Opis</th>-->
+<!--          <th>Długość WGS84</th>-->
+<!--          <th>Szerokość WGS84</th>-->
+          <th>Zdjęcie</th>
+          <th>Detale</th>
+          <th>Edytuj</th>
+          <th>Usuń</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let place of places">
+          <td>{{place.name}}</td>
+<!--          <td>{{place.description}}</td>-->
+<!--          <td>{{place.longitude}}</td>-->
+<!--          <td>{{place.latitude}}</td>-->
+          <td>{{place.pathToImage}}</td>
+          <td><button class="btn-primary btn-sm">Pokaż detale</button> </td>
+          <td><button class="btn-success btn-sm">Edytuj</button> </td>
+          <td><button class="btn-danger btn-sm">Usuń</button> </td>
+        </tr>
+      </tbody>
+      <footer>
+        <button class="btn-success btn-sm">Dodaj miejsce</button>
+      </footer>
+    </div>
+  </div>
 </div>

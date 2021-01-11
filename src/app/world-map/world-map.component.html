@@ -7,9 +7,9 @@
   <div>
     <app-weather-popup [coordinates]="hdms"></app-weather-popup>
   </div>
-  <button class="btn-success btn-sm" (click)="onShowWeatherForecastClicked()">Show forecast</button>
-  <button class="btn-danger btn-sm" (click)="hideWeatherForecast()">Hide forecast</button>
+  <div class="btn-group">
+    <button class="btn-primary btn-sm">Aktualna pogoda</button>
+    <button class="btn-success btn-sm" (click)="onShowWeatherForecastClicked()">Prognoza pogody</button>
+    <button class="btn-danger btn-sm" (click)="hideWeatherForecast()">Ukryj</button>
+  </div>
 </div>
-
-{{showCities}}
-
