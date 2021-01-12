@@ -1,5 +1,5 @@
 <div class="containe-fluidr">
-  <app-header (citiesChange)="citiesChanged($event)"></app-header>
+  <app-header (citiesChange)="citiesChanged($event)" (featureSelected)="onNavigate($event)"></app-header>
   <div class="row">
     <div class="col-2">
       <app-city-detail></app-city-detail>
@@ -12,12 +12,12 @@
   </div>
   <br>
   <div class="row">
-      <div class="col-12">
+      <div class="col-12" *ngIf="loadedFeature==='weather'">
         <app-weather-forecast *ngIf="iGetBool" [obtainedCoordinates]="coordinates"></app-weather-forecast>
       </div>
-    <!-- <div class="col-5">
+    <div class="col-12" *ngIf="loadedFeature === 'myPlaces'">
       <app-place-list></app-place-list>
-    </div> -->
+    </div>
   </div>
 </div>
 

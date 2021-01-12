@@ -8,7 +8,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class HeaderComponent implements OnInit {
   showCities: boolean;
   @Output() citiesChange = new EventEmitter<boolean>();
-
+  @Output() featureSelected = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit(): void {
@@ -19,4 +19,8 @@ export class HeaderComponent implements OnInit {
     this.citiesChange.emit(this.showCities);
   }
 
+
+  onSelect(feature: string): void {
+    this.featureSelected.emit(feature);
+  }
 }

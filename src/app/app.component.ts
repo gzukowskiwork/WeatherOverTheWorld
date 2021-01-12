@@ -9,6 +9,7 @@ export class AppComponent {
   iGetBool: boolean;
   coordinates: string;
   changeVisibilityOfCities: boolean;
+  loadedFeature = 'weather';
 
   onWeatherForecastRequested(showForecast: boolean): void {
     this.iGetBool = showForecast;
@@ -20,5 +21,9 @@ export class AppComponent {
 
   citiesChanged(eve: boolean): void {
     this.changeVisibilityOfCities = eve;
+  }
+
+  onNavigate(feature: string): void {
+    this.loadedFeature = feature;
   }
 }

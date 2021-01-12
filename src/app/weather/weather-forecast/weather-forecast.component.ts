@@ -14,15 +14,18 @@ import { EChartsOption } from 'echarts';
 export class WeatherForecastComponent implements OnInit, OnChanges {
   title = 'weather forecast';
 
-  
+
   public main1: any;
   public temp: number[]=[];
   public temp_min: number[]=[];
   public temp_max: number[]=[];
   public temp_feel: number[]=[];
   public weatherDate: any[]=[];
+  public wind: number[]= [];
+  public humidity: number[]= [];
 
-  chartOption: EChartsOption;
+  temperatureChartOption: EChartsOption;
+  windChartOption: EChartsOption;
   @Input() obtainedCoordinates: string;
   constructor(private coordinateService: CoordinateService,
               private weatherService: WeatherService) { }
@@ -52,15 +55,18 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
         this.temp_min = x['list'].map(x=>x.main.temp_min);
         this.temp_max = x['list'].map(x=>x.main.temp_max);
         this.temp_feel = x['list'].map(x=>x.main.feels_like);
+        this.wind = x['list'].map(x => x.wind.speed);
+        this.humidity = x['list'].map(x=>x.main.humidity);
         let dates = x['list'].map(x=>x.dt);
-       
+
         this.DateConversion(dates);
         this.generateTemperatureChart();
+        this.generateWindChart();
       });
-      
+
   }
 
-  
+
   private DateConversion(dates: any) {
     dates.forEach((x) => {
       let dupa = new Date(x * 1000);
@@ -73,8 +79,40 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
     });
   }
 
-  private generateTemperatureChart() {
-    this.chartOption = {
+  private formatTitle(cood: string): string{
+    return 'Pogoda w miejscu: \n' +
+      'szerokość WGS84: ' + this.showCoordinates().latitude +
+      '\ndługość WGS84: ' + this.showCoordinates().longitude;
+  }
+  private generateTemperatureChart(): void {
+    this.temperatureChartOption = {
+
+      title: {
+        text: this.formatTitle(this.obtainedCoordinates)
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      legend: {
+        data: ['temperatura', 'minimalna', 'maksymalna', 'odczuwalna']
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
       xAxis: {
         type: 'category',
         data: this.weatherDate,
@@ -86,22 +124,71 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
         {
           data: this.temp,
           type: 'line',
-          
-        },
-        {
-          data: this.temp_min,
-          type: 'line'
-        },
-        {
-          data: this.temp_max,
-          type: 'line'
+          smooth: true,
+          color: 'red'
         },
         {
           data: this.temp_feel,
-          type: 'line'
-        },
+          type: 'line',
+          smooth: true,
+          color: 'blue'
+        }
       ],
+
     };
+  }
+  private generateWindChart(): void {
+      this.windChartOption = {
+
+        title: {
+          text: this.formatTitle(this.obtainedCoordinates)
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data: ['temperatura', 'minimalna', 'maksymalna', 'odczuwalna']
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          data: this.weatherDate,
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: this.wind,
+            type: 'line',
+            smooth: true,
+            color: 'blue'
+          },
+          {
+            data: this.humidity,
+            type: 'line',
+            smooth: true,
+            color: 'purple'
+          }
+        ],
+
+      };
   }
 
   //https://echarts.apache.org/examples/en/editor.html?c=area-stack&theme=light
