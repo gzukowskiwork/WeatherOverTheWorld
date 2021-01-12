@@ -86,7 +86,7 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "WeatherAroundTheWorld"
+  "defaultProject": "WeatherAroundTheWorld",
+  "cli": {
+    "analytics": "11a5162c-8cea-449f-84ee-936ba7c85879"
+  }
 }
