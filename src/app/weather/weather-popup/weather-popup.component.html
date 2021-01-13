@@ -1,8 +1,13 @@
 <div>
-  Układ współrzędnych WGS84
-  Aktualne współrzędne:
-</div>
-<div>
   Szerokość: {{showCoordinates().latitude}}
   Długość: {{showCoordinates().longitude}}
+</div>
+<div>
+  <p>temperatura {{main.main.temp}}</p>
+  <p>odczuwalna {{main.main.feels_like}}</p>
+  <p>cisnienie {{main.main.pressure}}</p>
+  <p>wilgotnosc {{main.main.humidity}}</p>
+  <p>predkosc wiatru {{main.wind.speed}}</p>
+  <p>chmury {{main.clouds.all}}</p>
+  <p>info {{main.sys.message}}</p>
 </div>

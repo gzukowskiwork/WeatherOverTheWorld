@@ -37,7 +37,6 @@ export class WeatherPopupComponent implements OnInit, OnChanges {
         .subscribe(x => {
           this.main = x as any;
         });
-      console.log('request send');
     }
 
 }
