@@ -38,5 +38,4 @@ export class WeatherPopupComponent implements OnInit, OnChanges {
           this.main = x as any;
         });
     }
-
 }
