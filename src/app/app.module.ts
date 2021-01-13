@@ -9,6 +9,7 @@ import { WeatherForecastComponent } from './weather/weather-forecast/weather-for
 import { PlaceListComponent } from './place/place-list/place-list.component';
 import { CityDetailComponent } from './city/city-detail/city-detail.component';
 import {NgxEchartsModule} from 'ngx-echarts'
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,10 @@ import {NgxEchartsModule} from 'ngx-echarts'
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot([
+      {path: '', component: WorldMapComponent}
+    ]
+    ),
     HttpClientModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')

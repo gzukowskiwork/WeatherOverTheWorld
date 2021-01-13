@@ -1,0 +1,7 @@
+header	-> metoda toggleCities przez app.component do world-map.component
+	-> metoda onSelect bezpoœrednio do app.component
+
+world-map	-> onPlaceClick(string) ustawia w world-map zmnienn¹ i emituje wspórzêdne do weather-foracast
+		
+		-> hideForecast
+		

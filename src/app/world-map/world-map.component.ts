@@ -30,7 +30,6 @@ export class WorldMapComponent implements OnInit {
     return this._showCities;
   }
 
-
   @Output() showForecastRequest = new EventEmitter<boolean>();
   @Output() emitCoordinates = new EventEmitter<string>();
   layer: VectorLayer;
@@ -122,9 +121,8 @@ export class WorldMapComponent implements OnInit {
     };
   }
 
-  onShowWeatherForecastClicked(): void{
+  onShowWeatherForecastClickedOnMap(): void{
     this.toggloShowForecast();
-    console.log(this.hdms);
 
     this.showForecastRequest.emit(this.showForecast);
     this.emitCoordinates.emit(this.hdms);
@@ -139,34 +137,22 @@ export class WorldMapComponent implements OnInit {
 
     this.showForecastRequest.emit(this.showForecast);
   }
-
+  
   onPlaceClick(placeName: string){
       if(placeName==='roma'){
-        this.showRoma();
+        this.onShowWeatherForecastClicked('12.48205, 41.89397');
       }
       if(placeName==='osowa'){
-        this.showOsowa();
+        this.onShowWeatherForecastClicked('18.47219, 54.43211');
       }
       if(placeName==='wrzeszcz'){
-        this.showWrzeszcz();
+        this.onShowWeatherForecastClicked('18.60450, 54.37924');
       }
   }
 
-  private showWrzeszcz() {
+  private onShowWeatherForecastClicked(coordText: string) {
     this.toggloShowForecast();
-    this.emitCoordinates.emit('18.60450, 54.37924');
-    this.showForecastRequest.emit(this.showForecast);
-  }
-
-  private showOsowa() {
-    this.toggloShowForecast();
-    this.emitCoordinates.emit('18.47219, 54.43211');
-    this.showForecastRequest.emit(this.showForecast);
-  }
-
-  private showRoma() {
-    this.toggloShowForecast();
-    this.emitCoordinates.emit('12.48205, 41.89397');
+    this.emitCoordinates.emit(coordText);
     this.showForecastRequest.emit(this.showForecast);
   }
 }

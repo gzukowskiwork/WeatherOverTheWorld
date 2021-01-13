@@ -4,11 +4,6 @@
       <thead>
         <tr>
           <th>Nazwa</th>
-<!--          <th>Opis</th>-->
-<!--          <th>Długość WGS84</th>-->
-<!--          <th>Szerokość WGS84</th><th>Opis</th>-->
-<!--          <th>Długość WGS84</th>-->
-<!--          <th>Szerokość WGS84</th>-->
           <th>Zdjęcie</th>
           <th>Detale</th>
           <th>Edytuj</th>
@@ -18,10 +13,8 @@
       <tbody>
         <tr *ngFor="let place of places">
           <td>{{place.name}}</td>
-<!--          <td>{{place.description}}</td>-->
-<!--          <td>{{place.longitude}}</td>-->
-<!--          <td>{{place.latitude}}</td>-->
           <td>{{place.pathToImage}}</td>
+          <td>{{place.id}}</td>
           <td><button class="btn-primary btn-sm">Pokaż detale</button> </td>
           <td><button class="btn-success btn-sm">Edytuj</button> </td>
           <td><button class="btn-danger btn-sm">Usuń</button> </td>
