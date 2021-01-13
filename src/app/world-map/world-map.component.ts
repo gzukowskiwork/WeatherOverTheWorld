@@ -123,7 +123,8 @@ export class WorldMapComponent implements OnInit {
   }
 
   onShowWeatherForecastClicked(): void{
-    this.showForecast = true;
+    this.showForecast = !this.showForecast;
+    console.log(this.hdms);
 
     this.showForecastRequest.emit(this.showForecast);
     this.emitCoordinates.emit(this.hdms);
@@ -133,8 +134,38 @@ export class WorldMapComponent implements OnInit {
     this.showForecast = false;
 
     this.showForecastRequest.emit(this.showForecast);
-    this.emitCoordinates.emit(this.hdms);
   }
 
+  onPlaceClick(placeName: string){
+      if(placeName==='roma'){
+        this.showRoma(placeName);
+      }
+      if(placeName==='osowa'){
+        this.showOsowa(placeName);
+      }
+      if(placeName==='wrzeszcz'){
+        this.showWrzeszcz(placeName);
+      }
+  }
 
+  private showWrzeszcz(placeName: string) {
+    this.showForecast = !this.showForecast;
+    console.log(placeName);
+    this.emitCoordinates.emit('18.60450, 54.37924');
+    this.showForecastRequest.emit(this.showForecast);
+  }
+
+  private showOsowa(placeName: string) {
+    this.showForecast = !this.showForecast;
+    console.log(placeName);
+    this.emitCoordinates.emit('18.47219, 54.43211');
+    this.showForecastRequest.emit(this.showForecast);
+  }
+
+  private showRoma(placeName: string) {
+    this.showForecast = !this.showForecast;
+    console.log(placeName);
+    this.emitCoordinates.emit('12.48205, 41.89397');
+    this.showForecastRequest.emit(this.showForecast);
+  }
 }
