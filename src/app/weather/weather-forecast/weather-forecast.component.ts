@@ -26,6 +26,8 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
 
   temperatureChartOption: EChartsOption;
   windChartOption: EChartsOption;
+  humidityChartOption: EChartsOption;
+
   @Input() obtainedCoordinates: string;
   constructor(private coordinateService: CoordinateService,
               private weatherService: WeatherService) { }
@@ -62,6 +64,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
         this.DateConversion(dates);
         this.generateTemperatureChart();
         this.generateWindChart();
+        this.generateHumidityChart();
       });
 
   }
@@ -80,7 +83,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
   }
 
   private formatTitle(cood: string): string{
-    return 'Pogoda w miejscu: \n' +
+    return ' w miejscu: \n' +
       'szerokość WGS84: ' + this.showCoordinates().latitude +
       '\ndługość WGS84: ' + this.showCoordinates().longitude;
   }
@@ -88,7 +91,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
     this.temperatureChartOption = {
 
       title: {
-        text: this.formatTitle(this.obtainedCoordinates)
+        text: 'Temperatury' + this.formatTitle(this.obtainedCoordinates)
       },
       tooltip: {
         trigger: 'axis',
@@ -141,7 +144,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
       this.windChartOption = {
 
         title: {
-          text: this.formatTitle(this.obtainedCoordinates)
+         text: 'Siła wiatru' + this.formatTitle(this.obtainedCoordinates)
         },
         tooltip: {
           trigger: 'axis',
@@ -180,16 +183,54 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
             smooth: true,
             color: 'blue'
           },
-          {
-            data: this.humidity,
-            type: 'line',
-            smooth: true,
-            color: 'purple'
-          }
         ],
-
       };
   }
 
+  private generateHumidityChart(): void {
+    this.humidityChartOption = {
+      title: {
+        text: 'Wilgotność' + this.formatTitle(this.obtainedCoordinates)
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      legend: {
+        data: ['temperatura', 'minimalna', 'maksymalna', 'odczuwalna']
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: this.weatherDate,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: this.humidity,
+          type: 'line',
+          smooth: true,
+          color: 'purple'
+        }
+      ],
+    };
   //https://echarts.apache.org/examples/en/editor.html?c=area-stack&theme=light
+  }
 }
