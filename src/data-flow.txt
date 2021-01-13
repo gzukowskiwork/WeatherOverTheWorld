@@ -1,7 +1,6 @@
-header	-> metoda toggleCities przez app.component do world-map.component
-	-> metoda onSelect bezpoœrednio do app.component
+header	-> metoda toggleCities przez app.component do world-map.component zostaje bez serwisu
+	-> metoda onSelect bezpoÅ›rednio do app.component - do serwisu
 
-world-map	-> onPlaceClick(string) ustawia w world-map zmnienn¹ i emituje wspórzêdne do weather-foracast
-		
-		-> hideForecast
-		
+world-map	-> onPlaceClick(string) ustawia w world-map zmniennÄ… i emituje wspÃ³rzÄ™dne do weather-foracast
+
+		-> hideForecast - dla obydwu stworzyÄ‡ serwis
