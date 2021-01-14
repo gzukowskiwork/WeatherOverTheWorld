@@ -5,14 +5,12 @@ import { MenuService } from './menu.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  providers: [MenuService]
 })
 export class HeaderComponent implements OnInit {
   showCities: boolean;
   citiesText = 'Pokaż miasta';
   @Output() citiesChange = new EventEmitter<boolean>();
-  //@Output() featureSelected = new EventEmitter<string>();
-  
+
   constructor(private menuService: MenuService) { }
 
   ngOnInit(): void {
@@ -28,9 +26,8 @@ export class HeaderComponent implements OnInit {
     }
   }
 
- 
+
   onSelect(feature: string): void {
-    //this.featureSelected.emit(feature);
-    this.menuService.featureSelected = feature;
+    this.menuService.featureSelected.emit(feature);
   }
 }

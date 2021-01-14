@@ -7,18 +7,25 @@ import { MenuService } from './header/menu.service';
   styleUrls: ['./app.component.css'],
   providers: [MenuService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   iGetBool: boolean;
   coordinates: string;
   changeVisibilityOfCities: boolean;
-  loadedFeature = 'weather';
+  loadedFeature = 'myPlaces';
 
-  constructor (private menuService: MenuService)  {}
+  constructor(private menuService: MenuService)  {}
 
+  ngOnInit(): void {
+    this.menuService.featureSelected
+      .subscribe(
+      (feature: string) => {
+        this.loadedFeature = feature;
+      }
+    );
+  }
 
   onWeatherForecastRequested(showForecast: boolean): void {
     this.iGetBool = showForecast;
-    this.menuService.onFeatureChanged();
   }
 
   onCoordinatesEmitRequest(coordinates: string): void {
@@ -27,9 +34,5 @@ export class AppComponent {
 
   citiesChanged(eve: boolean): void {
     this.changeVisibilityOfCities = eve;
-  }
-
-  onNavigate(): void {
-    this.loadedFeature = this.menuService.onFeatureChanged();
   }
 }
