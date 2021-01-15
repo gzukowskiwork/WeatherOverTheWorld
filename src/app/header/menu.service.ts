@@ -7,11 +7,7 @@ export class MenuService {
   changeVisibilityOfCities: boolean;
   featureSelected = new EventEmitter<string>();
   citiesChanged = new EventEmitter<boolean>();
+
   constructor() {}
-
-
-  changeCitiesVisibility(status: boolean): void{
-    this.changeVisibilityOfCities = status;
-  }
 
 }

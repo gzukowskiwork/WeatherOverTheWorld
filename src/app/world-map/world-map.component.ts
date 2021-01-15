@@ -22,8 +22,8 @@ export class WorldMapComponent implements OnInit {
   hdms: string;
   private geojsonUrl = 'https://raw.githack.com/drei01/geojson-world-cities/master/cities.geojson';
   private _showCities: boolean;
-  
-  @Input() set showCities(value: boolean){
+
+  set showCities(value: boolean){
     this._showCities = value;
     this.updateVisibility();
   }
@@ -53,7 +53,7 @@ export class WorldMapComponent implements OnInit {
       (cityChanger: boolean) => {
         this.showCities = cityChanger;
       }
-    )
+    );
   }
 
 
@@ -65,14 +65,15 @@ export class WorldMapComponent implements OnInit {
     const overlay = WorldMapComponent.createOverlay(container);
 
     this.closeCoordinatesPopup(closer, overlay);
-
+  
     this.setMapProperties(overlay);
     this.layer = this.geoJsonVectorLayer();
     this.map.addLayer(this.layer);
 
     this.addLayersToMap();
+    
     this.showCoordinatePopup(content, overlay);
-
+    
   }
 
   private addLayersToMap(): void {
@@ -96,11 +97,12 @@ export class WorldMapComponent implements OnInit {
   }
   
   private showCoordinatePopup(content: HTMLElement, overlay: Overlay): void {
-    this.map.on('singleclick', (evt) => {
-      const coordinate = evt.coordinate;
-      this.hdms = toStringXY(toLonLat(coordinate), 5);
-      overlay.setPosition(coordinate);
-    });
+      this.map.on('singleclick', (evt) => {
+        const coordinate = evt.coordinate;
+        this.hdms = toStringXY(toLonLat(coordinate), 5);
+        overlay.setPosition(coordinate);
+      });
+    
   }
 
   private geoJsonVectorLayer(): VectorLayer {
