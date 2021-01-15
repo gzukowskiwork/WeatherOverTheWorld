@@ -8,6 +8,7 @@ import Overlay from 'ol/Overlay';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
+import { MenuService } from '../header/menu.service';
 
 @Component({
   selector: 'app-world-map',
@@ -21,7 +22,7 @@ export class WorldMapComponent implements OnInit {
   hdms: string;
   private geojsonUrl = 'https://raw.githack.com/drei01/geojson-world-cities/master/cities.geojson';
   private _showCities: boolean;
-
+  
   @Input() set showCities(value: boolean){
     this._showCities = value;
     this.updateVisibility();
@@ -43,11 +44,16 @@ export class WorldMapComponent implements OnInit {
       },
     });
   }
-  constructor() { }
+  constructor(private menuService: MenuService) { }
 
   ngOnInit(): void {
     this.initializeMap();
-
+    this.menuService.citiesChanged
+    .subscribe(
+      (cityChanger: boolean) => {
+        this.showCities = cityChanger;
+      }
+    )
   }
 
 
@@ -63,7 +69,6 @@ export class WorldMapComponent implements OnInit {
     this.setMapProperties(overlay);
     this.layer = this.geoJsonVectorLayer();
     this.map.addLayer(this.layer);
-
 
     this.addLayersToMap();
     this.showCoordinatePopup(content, overlay);
@@ -89,7 +94,7 @@ export class WorldMapComponent implements OnInit {
       }),
     });
   }
-
+  
   private showCoordinatePopup(content: HTMLElement, overlay: Overlay): void {
     this.map.on('singleclick', (evt) => {
       const coordinate = evt.coordinate;
@@ -109,8 +114,8 @@ export class WorldMapComponent implements OnInit {
   }
 
   private updateVisibility(): void{
-    this.layer.setVisible(this._showCities);
-    console.log(this._showCities);
+    this.layer.setVisible(this.showCities);
+    console.log(this.showCities);
   }
 
   private closeCoordinatesPopup(closer: HTMLElement, overlay: Overlay): void {

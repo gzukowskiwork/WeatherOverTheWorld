@@ -9,7 +9,6 @@ import { MenuService } from './menu.service';
 export class HeaderComponent implements OnInit {
   showCities: boolean;
   citiesText = 'Pokaż miasta';
-  @Output() citiesChange = new EventEmitter<boolean>();
 
   constructor(private menuService: MenuService) { }
 
@@ -18,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   toggleCities(): void {
     this.showCities = !this.showCities;
-    this.citiesChange.emit(this.showCities);
+    this.menuService.citiesChanged.emit(this.showCities);
     if(this.showCities){
       this.citiesText = 'Ukryj miasta';
     }else{
