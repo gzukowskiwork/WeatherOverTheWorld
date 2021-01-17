@@ -4,7 +4,6 @@ import {EventEmitter, Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class MenuService {
-  changeVisibilityOfCities: boolean;
   featureSelected = new EventEmitter<string>();
   citiesChanged = new EventEmitter<boolean>();
 

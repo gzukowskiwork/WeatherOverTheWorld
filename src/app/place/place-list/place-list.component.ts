@@ -16,7 +16,7 @@ export class PlaceListComponent implements OnInit {
     this.getAllPlaces();
   }
 
-  getAllPlaces() {
+  getAllPlaces(): void {
     const apiAddress = 'Place';
     this.repository.getPlaces(apiAddress)
       .subscribe(x => {

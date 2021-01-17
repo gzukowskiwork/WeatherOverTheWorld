@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CoordinateService} from '../../shared/coordinate.service';
 import {WeatherService} from '../../shared/weather.service';
 
@@ -8,7 +8,7 @@ import {WeatherService} from '../../shared/weather.service';
   styleUrls: ['./weather-popup.component.css'],
   providers: [CoordinateService]
 })
-export class WeatherPopupComponent implements OnInit, OnChanges {
+export class WeatherPopupComponent implements OnInit {
   public main: any;
 
   constructor(private coordinateService: CoordinateService,
@@ -19,11 +19,12 @@ export class WeatherPopupComponent implements OnInit, OnChanges {
     this.getWeather();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes[this.coordinates]){
-      this.showCoordinates();
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes[this.coordinates]){
+  //     this.showCoordinates();
+  //   }
+  //   console.log('onchanges from WEATHERPOPUP');
+  // }
 
   showCoordinates(): {longitude: string, latitude: string} {
     return this.coordinateService.reverseCoordinatesToLatLon(this.coordinates);

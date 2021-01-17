@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {LoggingService} from '../../shared/logging.service';
 import {CoordinateService} from '../../shared/coordinate.service';
 import {WeatherService} from '../../shared/weather.service';
@@ -11,35 +11,25 @@ import { EChartsOption } from 'echarts';
   providers: [LoggingService, CoordinateService]
 })
 
-export class WeatherForecastComponent implements OnInit, OnChanges {
-  title = 'weather forecast';
-
-
+export class WeatherForecastComponent implements OnInit{
   public main1: any;
-  public temp: number[]=[];
-  public temp_min: number[]=[];
-  public temp_max: number[]=[];
-  public temp_feel: number[]=[];
-  public weatherDate: any[]=[];
-  public wind: number[]= [];
-  public humidity: number[]= [];
+  public temp: number[] = [];
+  public tempFeel: number[] = [];
+  public weatherDate: any[] = [];
+  public wind: number[] = [];
+  public humidity: number[] = [];
 
   temperatureChartOption: EChartsOption;
   windChartOption: EChartsOption;
   humidityChartOption: EChartsOption;
 
   @Input() obtainedCoordinates: string;
+
   constructor(private coordinateService: CoordinateService,
               private weatherService: WeatherService) { }
 
   ngOnInit(): void {
     this.getWeather();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes[this.obtainedCoordinates]){
-      this.showCoordinates();
-    }
   }
 
   showCoordinates(): {longitude: string, latitude: string} {
@@ -53,27 +43,24 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
     this.weatherService.getForecast(lat, lon)
       .subscribe(x => {
         this.main1 = x as any;
-        this.temp = x['list'].map(x=>x.main.temp);
-        this.temp_min = x['list'].map(x=>x.main.temp_min);
-        this.temp_max = x['list'].map(x=>x.main.temp_max);
-        this.temp_feel = x['list'].map(x=>x.main.feels_like);
+        this.temp = x['list'].map(x => x.main.temp);
+        this.tempFeel = x['list'].map(x => x.main.feels_like);
         this.wind = x['list'].map(x => x.wind.speed);
-        this.humidity = x['list'].map(x=>x.main.humidity);
-        let dates = x['list'].map(x=>x.dt);
+        this.humidity = x['list'].map(x => x.main.humidity);
+        const dates = x['list'].map(x => x.dt);
 
         this.DateConversion(dates);
         this.generateTemperatureChart();
         this.generateWindChart();
         this.generateHumidityChart();
       });
-
   }
 
 
-  private DateConversion(dates: any) {
+  private DateConversion(dates: any): void {
     dates.forEach((x) => {
-      let dupa = new Date(x * 1000);
-      this.weatherDate.push(dupa.toLocaleDateString(
+      const date = new Date(x * 1000);
+      this.weatherDate.push(date.toLocaleDateString(
         'pl', {
         month: 'numeric',
         day: 'numeric',
@@ -82,7 +69,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
     });
   }
 
-  private formatTitle(cood: string): string{
+  private formatTitle(): string{
     return ' w miejscu: \n' +
       'szerokość WGS84: ' + this.showCoordinates().latitude +
       '\ndługość WGS84: ' + this.showCoordinates().longitude;
@@ -91,7 +78,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
     this.temperatureChartOption = {
 
       title: {
-        text: 'Temperatury' + this.formatTitle(this.obtainedCoordinates)
+        text: 'Temperatury' + this.formatTitle()
       },
       tooltip: {
         trigger: 'axis',
@@ -131,7 +118,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
           color: 'red'
         },
         {
-          data: this.temp_feel,
+          data: this.tempFeel,
           type: 'line',
           smooth: true,
           color: 'blue'
@@ -144,7 +131,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
       this.windChartOption = {
 
         title: {
-         text: 'Siła wiatru' + this.formatTitle(this.obtainedCoordinates)
+         text: 'Siła wiatru' + this.formatTitle()
         },
         tooltip: {
           trigger: 'axis',
@@ -154,9 +141,6 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
               backgroundColor: '#6a7985'
             }
           }
-        },
-        legend: {
-          data: ['temperatura', 'minimalna', 'maksymalna', 'odczuwalna']
         },
         toolbox: {
           feature: {
@@ -190,7 +174,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
   private generateHumidityChart(): void {
     this.humidityChartOption = {
       title: {
-        text: 'Wilgotność' + this.formatTitle(this.obtainedCoordinates)
+        text: 'Wilgotność' + this.formatTitle()
       },
       tooltip: {
         trigger: 'axis',
@@ -200,9 +184,6 @@ export class WeatherForecastComponent implements OnInit, OnChanges {
             backgroundColor: '#6a7985'
           }
         }
-      },
-      legend: {
-        data: ['temperatura', 'minimalna', 'maksymalna', 'odczuwalna']
       },
       toolbox: {
         feature: {

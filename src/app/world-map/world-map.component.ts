@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Map, View} from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import {OSM} from 'ol/source';
@@ -9,6 +9,7 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 import { MenuService } from '../header/menu.service';
+import {CoordinateService} from '../shared/coordinate.service';
 
 @Component({
   selector: 'app-world-map',
@@ -20,20 +21,18 @@ export class WorldMapComponent implements OnInit {
   map: Map;
   showForecast = false;
   hdms: string;
-  private geojsonUrl = 'https://raw.githack.com/drei01/geojson-world-cities/master/cities.geojson';
-  private _showCities: boolean;
+  layer: VectorLayer;
+
+  private geoJsonUrl = 'https://raw.githack.com/drei01/geojson-world-cities/master/cities.geojson';
+  private ShowCities: boolean;
 
   set showCities(value: boolean){
-    this._showCities = value;
+    this.ShowCities = value;
     this.updateVisibility();
   }
   get showCities(): boolean{
-    return this._showCities;
+    return this.ShowCities;
   }
-
-  @Output() showForecastRequest = new EventEmitter<boolean>();
-  @Output() emitCoordinates = new EventEmitter<string>();
-  layer: VectorLayer;
 
   private static createOverlay(container: HTMLElement): Overlay {
     return new Overlay({
@@ -44,7 +43,7 @@ export class WorldMapComponent implements OnInit {
       },
     });
   }
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService, private coordinateService: CoordinateService) { }
 
   ngOnInit(): void {
     this.initializeMap();
@@ -65,15 +64,14 @@ export class WorldMapComponent implements OnInit {
     const overlay = WorldMapComponent.createOverlay(container);
 
     this.closeCoordinatesPopup(closer, overlay);
-  
+
     this.setMapProperties(overlay);
     this.layer = this.geoJsonVectorLayer();
     this.map.addLayer(this.layer);
 
     this.addLayersToMap();
-    
+
     this.showCoordinatePopup(content, overlay);
-    
   }
 
   private addLayersToMap(): void {
@@ -95,20 +93,20 @@ export class WorldMapComponent implements OnInit {
       }),
     });
   }
-  
+
   private showCoordinatePopup(content: HTMLElement, overlay: Overlay): void {
       this.map.on('singleclick', (evt) => {
         const coordinate = evt.coordinate;
         this.hdms = toStringXY(toLonLat(coordinate), 5);
         overlay.setPosition(coordinate);
       });
-    
+
   }
 
   private geoJsonVectorLayer(): VectorLayer {
     return new VectorLayer({
       source: new VectorSource({
-        url: this.geojsonUrl,
+        url: this.geoJsonUrl,
         format: new GeoJSON()
       }),
       visible: false
@@ -129,37 +127,38 @@ export class WorldMapComponent implements OnInit {
   }
 
   onShowWeatherForecastClickedOnMap(): void{
-    this.toggloShowForecast();
+    this.toggleShowForecast();
 
-    this.showForecastRequest.emit(this.showForecast);
-    this.emitCoordinates.emit(this.hdms);
+    this.coordinateService.showCoordsFromService.emit(this.showForecast);
+    this.coordinateService.coordsFromService.emit(this.hdms);
   }
 
-  private toggloShowForecast() {
-    this.showForecast=!this.showForecast;
+  private toggleShowForecast(): void {
+    this.showForecast = !this.showForecast;
   }
 
   hideWeatherForecast(): void {
     this.showForecast = false;
 
-    this.showForecastRequest.emit(this.showForecast);
+    this.coordinateService.showCoordsFromService.emit(false);
   }
-  
-  onPlaceClick(placeName: string){
-      if(placeName==='roma'){
+
+  onPlaceClick(placeName: string): void{
+      if (placeName === 'roma'){
         this.onShowWeatherForecastClicked('12.48205, 41.89397');
       }
-      if(placeName==='osowa'){
+      if (placeName === 'osowa'){
         this.onShowWeatherForecastClicked('18.47219, 54.43211');
       }
-      if(placeName==='wrzeszcz'){
+      if (placeName === 'wrzeszcz'){
         this.onShowWeatherForecastClicked('18.60450, 54.37924');
       }
   }
 
-  private onShowWeatherForecastClicked(coordText: string) {
-    this.toggloShowForecast();
-    this.emitCoordinates.emit(coordText);
-    this.showForecastRequest.emit(this.showForecast);
+  private onShowWeatherForecastClicked(coordText: string): void {
+    this.toggleShowForecast();
+
+    this.coordinateService.coordsFromService.emit(coordText);
+    this.coordinateService.showCoordsFromService.emit(this.showForecast);
   }
 }

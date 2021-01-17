@@ -5,8 +5,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 
 export class CoordinateService {
-  coordinateObjectEvent = new EventEmitter<{request: boolean, coordinates: string}>();
-
+  showCoordsFromService = new EventEmitter<boolean>();
+  coordsFromService = new EventEmitter<string>();
 
   reverseCoordinatesToLatLon(coordinateString: string): {longitude: string, latitude: string}{
     if (coordinateString === undefined){
@@ -21,6 +21,4 @@ export class CoordinateService {
       };
     }
   }
-
-  
 }
