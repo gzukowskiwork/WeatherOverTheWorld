@@ -14,6 +14,7 @@ import {NgxEchartsModule} from 'ngx-echarts'
 import { RouterModule } from '@angular/router';
 import { WeatherComponent } from './weather/weather.component';
 import { from } from 'rxjs';
+import { CityComponent } from './city/city.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { from } from 'rxjs';
     CityDetailComponent,
     WeatherComponent,
     PlaceComponent,
+    CityComponent
   ],
   imports: [
     BrowserModule,
