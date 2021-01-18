@@ -23,5 +23,4 @@ export class PlaceListComponent implements OnInit {
         this.places = x as Place[];
       });
   }
-
 }
