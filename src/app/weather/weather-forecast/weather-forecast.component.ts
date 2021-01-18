@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {LoggingService} from '../../shared/logging.service';
 import {CoordinateService} from '../../shared/coordinate.service';
 import {WeatherService} from '../../shared/weather.service';
@@ -11,7 +11,7 @@ import { EChartsOption } from 'echarts';
   providers: [LoggingService, CoordinateService]
 })
 
-export class WeatherForecastComponent implements OnInit{
+export class WeatherForecastComponent implements OnInit, OnChanges{
   public main1: any;
   public temp: number[] = [];
   public tempFeel: number[] = [];
@@ -29,8 +29,15 @@ export class WeatherForecastComponent implements OnInit{
               private weatherService: WeatherService) { }
 
   ngOnInit(): void {
+    
     this.getWeather();
   }
+
+  ngOnChanges(simpleChanges: SimpleChanges): void {
+    this.getWeather();
+    this.weatherDate = []
+  }
+
 
   showCoordinates(): {longitude: string, latitude: string} {
     return this.coordinateService.reverseCoordinatesToLatLon(this.obtainedCoordinates);
@@ -76,7 +83,6 @@ export class WeatherForecastComponent implements OnInit{
   }
   private generateTemperatureChart(): void {
     this.temperatureChartOption = {
-
       title: {
         text: 'Temperatury' + this.formatTitle()
       },
@@ -105,7 +111,8 @@ export class WeatherForecastComponent implements OnInit{
       },
       xAxis: {
         type: 'category',
-        data: this.weatherDate,
+        // data: this.weatherDate,
+        data: this.weatherDate
       },
       yAxis: {
         type: 'value',

@@ -127,38 +127,13 @@ export class WorldMapComponent implements OnInit {
   }
 
   onShowWeatherForecastClickedOnMap(): void{
-    this.toggleShowForecast();
-
-    this.coordinateService.showCoordsFromService.emit(this.showForecast);
+    this.coordinateService.showCoordsFromService.emit(true);
     this.coordinateService.coordsFromService.emit(this.hdms);
-  }
-
-  private toggleShowForecast(): void {
-    this.showForecast = !this.showForecast;
   }
 
   hideWeatherForecast(): void {
     this.showForecast = false;
 
     this.coordinateService.showCoordsFromService.emit(false);
-  }
-
-  onPlaceClick(placeName: string): void{
-      if (placeName === 'roma'){
-        this.onShowWeatherForecastClicked('12.48205, 41.89397');
-      }
-      if (placeName === 'osowa'){
-        this.onShowWeatherForecastClicked('18.47219, 54.43211');
-      }
-      if (placeName === 'wrzeszcz'){
-        this.onShowWeatherForecastClicked('18.60450, 54.37924');
-      }
-  }
-
-  private onShowWeatherForecastClicked(coordText: string): void {
-    this.toggleShowForecast();
-
-    this.coordinateService.coordsFromService.emit(coordText);
-    this.coordinateService.showCoordsFromService.emit(this.showForecast);
   }
 }

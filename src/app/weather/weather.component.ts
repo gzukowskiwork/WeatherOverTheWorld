@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CoordinateService} from '../shared/coordinate.service';
 
 
@@ -28,5 +28,20 @@ export class WeatherComponent implements OnInit{
          this.coordinates = coords;
         }
       );
+  }
+
+  onPlaceClick(placeName: string): void{
+    if (placeName === 'roma'){
+      this.iGetBool = true;
+      this.coordinates = '12.48205, 41.89397';
+    }
+    if (placeName === 'osowa'){
+      this.iGetBool = true;
+      this.coordinates = '18.47219, 54.43211';
+    }
+    if (placeName === 'wrzeszcz'){
+     this.iGetBool = true;
+      this.coordinates = '18.60450, 54.37924';
+    }
   }
 }
