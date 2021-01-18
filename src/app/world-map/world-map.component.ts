@@ -22,7 +22,7 @@ export class WorldMapComponent implements OnInit {
   showForecast = false;
   hdms: string;
   layer: VectorLayer;
-
+  
   private geoJsonUrl = 'https://raw.githack.com/drei01/geojson-world-cities/master/cities.geojson';
   private ShowCities: boolean;
 
@@ -57,10 +57,10 @@ export class WorldMapComponent implements OnInit {
 
 
   initializeMap(): void {
-    const content = document.getElementById('popup-content');
+    
     const container = document.getElementById('popup');
     const closer = document.getElementById('popup-closer');
-
+    const content = document.getElementById('popup-content');
     const overlay = WorldMapComponent.createOverlay(container);
 
     this.closeCoordinatesPopup(closer, overlay);
@@ -97,8 +97,10 @@ export class WorldMapComponent implements OnInit {
   private showCoordinatePopup(content: HTMLElement, overlay: Overlay): void {
       this.map.on('singleclick', (evt) => {
         const coordinate = evt.coordinate;
-        this.hdms = toStringXY(toLonLat(coordinate), 5);
+        this.hdms = toStringXY(toLonLat(coordinate), 6);
         overlay.setPosition(coordinate);
+        content.innerHTML = '<p>Współrzędne kliknięcia: </p><code>' + this.hdms + '</code>'
+
       });
 
   }
