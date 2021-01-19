@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PlacesRepositoryService} from '../../shared/places-repository.service';
 import {Place} from '../../shared/models/place';
 
@@ -9,12 +9,15 @@ import {Place} from '../../shared/models/place';
 })
 export class PlaceListComponent implements OnInit {
   public places: Place[];
-
+  placeId: number;
   constructor(private  repository: PlacesRepositoryService) { }
 
   ngOnInit(): void {
     this.getAllPlaces();
+
   }
+
+
 
   getAllPlaces(): void {
     const apiAddress = 'Place';
@@ -22,5 +25,15 @@ export class PlaceListComponent implements OnInit {
       .subscribe(x => {
         this.places = x as Place[];
       });
+  }
+
+  setId(id: number): void {
+    this.placeId = id;
+  }
+
+  delete(id: number): void {
+    //TODO: make it work like it should work
+    const apiAddress = 'Place';
+    this.repository.deletePlace(apiAddress, id).subscribe();
   }
 }

@@ -8,7 +8,7 @@ import {WeatherService} from '../../shared/weather.service';
   styleUrls: ['./weather-popup.component.css'],
   providers: [CoordinateService]
 })
-export class WeatherPopupComponent implements OnInit {
+export class WeatherPopupComponent implements OnInit, OnChanges {
   public main: any;
 
   constructor(private coordinateService: CoordinateService,
@@ -16,10 +16,9 @@ export class WeatherPopupComponent implements OnInit {
 
   @Input() coordinates: string;
   ngOnInit(): void {
-    this.getWeather();
   }
 
-  ngOnChanges(){
+  ngOnChanges(): void{
     this.getWeather();
   }
 

@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { WeatherComponent } from './weather/weather.component';
 import { from } from 'rxjs';
 import { CityComponent } from './city/city.component';
+import { PlaceDetailComponent } from './place/place-detail/place-detail.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CityComponent } from './city/city.component';
     CityDetailComponent,
     WeatherComponent,
     PlaceComponent,
-    CityComponent
+    CityComponent,
+    PlaceDetailComponent
   ],
   imports: [
     BrowserModule,

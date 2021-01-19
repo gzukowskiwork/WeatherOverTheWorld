@@ -29,13 +29,11 @@ export class WeatherForecastComponent implements OnInit, OnChanges{
               private weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    
-    this.getWeather();
   }
 
   ngOnChanges(simpleChanges: SimpleChanges): void {
     this.getWeather();
-    this.weatherDate = []
+    this.weatherDate = [];
   }
 
 

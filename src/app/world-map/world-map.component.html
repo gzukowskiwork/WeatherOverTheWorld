@@ -3,7 +3,8 @@
   <a href="#" id="popup-closer" class="ol-popup-closer"></a>
   <div id="popup-content"></div>
   <div class="btn-group">
-    <button class="btn-success btn-sm" (click)="onShowWeatherForecastClickedOnMap()">Dane pogodowe</button>
-    <button class="btn-danger btn-sm" (click)="hideWeatherForecast()">Ukryj</button>
+    <button *ngIf="feature === 'weather'" class="btn-success btn-sm" (click)="onShowWeatherForecastClickedOnMap()">Dane pogodowe</button>
+    <button *ngIf="feature === 'weather'" class="btn-danger btn-sm" (click)="hideWeatherForecast()">Ukryj</button>
+    <button *ngIf="feature === 'myPlaces'" class="btn-primary">Dodaj miejsce</button>
   </div>
 </div>

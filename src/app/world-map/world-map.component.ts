@@ -22,7 +22,8 @@ export class WorldMapComponent implements OnInit {
   showForecast = false;
   hdms: string;
   layer: VectorLayer;
-  
+  feature: string;
+
   private geoJsonUrl = 'https://raw.githack.com/drei01/geojson-world-cities/master/cities.geojson';
   private ShowCities: boolean;
 
@@ -53,11 +54,17 @@ export class WorldMapComponent implements OnInit {
         this.showCities = cityChanger;
       }
     );
+    this.menuService.featureSelected
+      .subscribe(
+        (featureSelected: string) => {
+          this.feature = featureSelected;
+        }
+      );
   }
 
 
   initializeMap(): void {
-    
+
     const container = document.getElementById('popup');
     const closer = document.getElementById('popup-closer');
     const content = document.getElementById('popup-content');
@@ -99,8 +106,7 @@ export class WorldMapComponent implements OnInit {
         const coordinate = evt.coordinate;
         this.hdms = toStringXY(toLonLat(coordinate), 6);
         overlay.setPosition(coordinate);
-        content.innerHTML = '<p>Współrzędne kliknięcia: </p><code>' + this.hdms + '</code>'
-
+        content.innerHTML = '<p>Współrzędne kliknięcia: </p><code>' + this.hdms + '</code>';
       });
 
   }
@@ -135,7 +141,6 @@ export class WorldMapComponent implements OnInit {
 
   hideWeatherForecast(): void {
     this.showForecast = false;
-
     this.coordinateService.showCoordsFromService.emit(false);
   }
 }
