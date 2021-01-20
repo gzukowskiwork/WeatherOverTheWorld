@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-xs-12 col-lg-12">
+    <form [formGroup]="placeForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="row-sm-12 col-md-4 form-group">
+          <label for="place-name">Nazwa</label>
+          <input id="place-name" type="text" class="form-control" formControlName="Nazwa">
+        </div>
+        <div class="row-sm-12 col-md-4 form-group">
+          <label for="place-description">Opis</label>
+          <input id="place-description" type="text" class="form-control" formControlName="Opis">
+        </div>
+        <div class="row-sm-12 col-md-4 form-group">
+          <label for="place-X">X</label>
+          <input id="place-X" type="text" class="form-control" formControlName="X">
+        </div>
+        <div class="row-sm-12 col-md-4 form-group">
+          <label for="place-Y">Y</label>
+          <input id="place-Y" type="text" class="form-control" formControlName="Y">
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-12 col-lg-12">
+          <div class="row">
+            <div class="col-sm-12 col-md-4 form-group">
+            </div>
+            <div class="col-sm-12 col-md-4 form-group">
+              <button class="btn btn-success" type="submit">Dodaj</button>
+            </div>
+            <button class="btn btn-primary" type="button">Wyczyść</button>
+          </div>
+          <div class="col-sm-12 col-md-4 form-group">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

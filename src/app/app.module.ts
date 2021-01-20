@@ -11,11 +11,11 @@ import { CityDetailComponent } from './city/city-detail/city-detail.component';
 import { PlaceComponent } from './place/place.component';
 
 import {NgxEchartsModule} from 'ngx-echarts'
-import { RouterModule } from '@angular/router';
 import { WeatherComponent } from './weather/weather.component';
-import { from } from 'rxjs';
 import { CityComponent } from './city/city.component';
 import { PlaceDetailComponent } from './place/place-detail/place-detail.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CreatePlaceComponent } from './place/create-place/create-place.component';
 
 @NgModule({
   declarations: [
@@ -29,18 +29,17 @@ import { PlaceDetailComponent } from './place/place-detail/place-detail.componen
     WeatherComponent,
     PlaceComponent,
     CityComponent,
-    PlaceDetailComponent
+    PlaceDetailComponent,
+    CreatePlaceComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      {path: '', component: WorldMapComponent}
-    ]
-    ),
     HttpClientModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
-    })
+    }),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
