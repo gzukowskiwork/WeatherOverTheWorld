@@ -5,6 +5,6 @@
   <div class="btn-group">
     <button *ngIf="feature === 'weather'" class="btn-success btn-sm" (click)="onShowWeatherForecastClickedOnMap()">Dane pogodowe</button>
     <button *ngIf="feature === 'weather'" class="btn-danger btn-sm" (click)="hideWeatherForecast()">Ukryj</button>
-    <button *ngIf="feature === 'myPlaces'" class="btn-primary">Dodaj miejsce</button>
+    <button *ngIf="feature === 'myPlaces'" class="btn-primary" (click)="onShowWeatherForecastClickedOnMap()">Dodaj miejsce</button>
   </div>
 </div>

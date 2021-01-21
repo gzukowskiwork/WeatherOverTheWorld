@@ -14,7 +14,7 @@ import {NgxEchartsModule} from 'ngx-echarts'
 import { WeatherComponent } from './weather/weather.component';
 import { CityComponent } from './city/city.component';
 import { PlaceDetailComponent } from './place/place-detail/place-detail.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule} from '@angular/forms';
 import { CreatePlaceComponent } from './place/create-place/create-place.component';
 
 @NgModule({
@@ -38,7 +38,6 @@ import { CreatePlaceComponent } from './place/create-place/create-place.componen
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     }),
-    FormsModule,
     ReactiveFormsModule
   ],
   providers: [],

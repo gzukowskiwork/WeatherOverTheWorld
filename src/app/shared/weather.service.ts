@@ -16,14 +16,14 @@ export class WeatherService {
 
   getCurrenttWeather(lat: string, lon: string): Observable<object>{
     return this.http.get(
-      this.baseUrl + 'weather?lat=' + lat + '&lon=' + lon + '&appid=' + this.apiKey + '&units=' + this.units)
-      .pipe(map((response: any) => response.json()));
+      this.baseUrl + 'weather?lat=' + lat + '&lon=' + lon + '&appid=' + this.apiKey + '&units=' + this.units);
+      // .pipe(map((response: any) => response.json()));
   }
 
   getForecast(lat: string, lon: string): Observable<object>{
     return this.http.get(
-      'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + this.apiKey + '&units=' + this.units)
-      .pipe(map((response: any) => response.json()));;
+      'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + this.apiKey + '&units=' + this.units);
+      // .pipe(map((response: any) => response.json()));;
   }
 
 }

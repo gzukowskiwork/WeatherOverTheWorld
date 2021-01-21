@@ -5,6 +5,10 @@
         <div class="row-sm-12 col-md-4 form-group">
           <label for="place-name">Nazwa</label>
           <input id="place-name" type="text" class="form-control" formControlName="Nazwa">
+          <span
+            *ngIf="!placeForm.get('Nazwa').valid && placeForm.get('Nazwa').touched" style="color: red">
+            Pole wymagane
+          </span>
         </div>
         <div class="row-sm-12 col-md-4 form-group">
           <label for="place-description">Opis</label>
@@ -12,11 +16,11 @@
         </div>
         <div class="row-sm-12 col-md-4 form-group">
           <label for="place-X">X</label>
-          <input id="place-X" type="text" class="form-control" formControlName="X">
+          <input id="place-X" type="text" class="form-control" formControlName="X" disabled>
         </div>
         <div class="row-sm-12 col-md-4 form-group">
           <label for="place-Y">Y</label>
-          <input id="place-Y" type="text" class="form-control" formControlName="Y">
+          <input id="place-Y" type="text" class="form-control" formControlName="Y" disabled>
         </div>
       </div>
       <hr>
