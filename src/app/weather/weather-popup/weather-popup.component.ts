@@ -32,6 +32,7 @@ export class WeatherPopupComponent implements OnInit, OnChanges {
 
       this.weatherService.getCurrenttWeather(lat, lon)
         .subscribe(x => {
+          console.log(x)
           this.main = x as any;
         });
     }

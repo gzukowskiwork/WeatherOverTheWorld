@@ -47,6 +47,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges{
 
     this.weatherService.getForecast(lat, lon)
       .subscribe(x => {
+
         this.main1 = x as any;
         this.temp = x['list'].map(x => x.main.temp);
         this.tempFeel = x['list'].map(x => x.main.feels_like);
