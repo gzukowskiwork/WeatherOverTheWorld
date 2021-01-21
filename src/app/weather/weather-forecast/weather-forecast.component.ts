@@ -217,6 +217,6 @@ export class WeatherForecastComponent implements OnInit, OnChanges{
         }
       ],
     };
-  //https://echarts.apache.org/examples/en/editor.html?c=area-stack&theme=light
+  // https://echarts.apache.org/examples/en/editor.html?c=area-stack&theme=light
   }
 }

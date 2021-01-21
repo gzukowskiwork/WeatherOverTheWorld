@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { MenuService } from './menu.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   toggleCities(): void {
     this.showCities = !this.showCities;
-    this.menuService.citiesChanged.emit(this.showCities);
+    this.menuService.citiesChanged.next(this.showCities);
     if(this.showCities){
       this.citiesText = 'Ukryj miasta';
     }else{
@@ -27,6 +27,6 @@ export class HeaderComponent implements OnInit {
 
 
   onSelect(feature: string): void {
-    this.menuService.featureSelected.emit(feature);
+    this.menuService.featureSelected.next(feature);
   }
 }

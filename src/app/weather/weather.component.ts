@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {CoordinateService} from '../shared/coordinate.service';
 
 
@@ -40,7 +40,7 @@ export class WeatherComponent implements OnInit{
       this.coordinates = '18.47219, 54.43211';
     }
     if (placeName === 'wrzeszcz'){
-     this.iGetBool = true;
+      this.iGetBool = true;
       this.coordinates = '18.60450, 54.37924';
     }
   }

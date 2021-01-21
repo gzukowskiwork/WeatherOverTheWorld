@@ -135,12 +135,12 @@ export class WorldMapComponent implements OnInit {
   }
 
   onShowWeatherForecastClickedOnMap(): void{
-    this.coordinateService.showCoordsFromService.emit(true);
-    this.coordinateService.coordsFromService.emit(this.hdms);
+    this.coordinateService.showCoordsFromService.next(true);
+    this.coordinateService.coordsFromService.next(this.hdms);
   }
 
   hideWeatherForecast(): void {
     this.showForecast = false;
-    this.coordinateService.showCoordsFromService.emit(false);
+    this.coordinateService.showCoordsFromService.next(false);
   }
 }

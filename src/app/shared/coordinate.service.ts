@@ -1,12 +1,13 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CoordinateService {
-  showCoordsFromService = new EventEmitter<boolean>();
-  coordsFromService = new EventEmitter<string>();
+  showCoordsFromService = new Subject<boolean>();
+  coordsFromService = new Subject<string>();
 
   reverseCoordinatesToLatLon(coordinateString: string): {longitude: string, latitude: string}{
     if (coordinateString === undefined){
