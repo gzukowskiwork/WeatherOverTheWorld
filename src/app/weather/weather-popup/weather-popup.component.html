@@ -3,11 +3,19 @@
   Długość: {{showCoordinates().longitude}}
 </div>
 <div>
-  <p>temperatura {{main.main.temp}}</p>
+  <p>temperatura {{temp}}</p>
   <p>odczuwalna {{main.main.feels_like}}</p>
   <p>cisnienie {{main.main.pressure}}</p>
   <p>wilgotnosc {{main.main.humidity}}</p>
   <p>predkosc wiatru {{main.wind.speed}}</p>
   <p>chmury {{main.clouds.all}}</p>
   <p>info {{main.sys.message}}</p>
+  <p>{{main.sys.sunrise}}</p>
+  <p>{{main.sys.sunset}}</p>
+  <p>{{main.sys.name}}</p>
+    <div *ngFor="let w of main.weather">
+      <p>{{w.main}}</p>
+      <p>{{w.description}}</p>
+      <p>{{w.icon}}</p>
+    </div>
 </div>

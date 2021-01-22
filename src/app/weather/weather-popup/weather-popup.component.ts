@@ -2,6 +2,7 @@ import {Component, Input, OnInit, OnChanges} from '@angular/core';
 import {CoordinateService} from '../../shared/coordinate.service';
 import {WeatherService} from '../../shared/weather.service';
 
+
 @Component({
   selector: 'app-weather-popup',
   templateUrl: './weather-popup.component.html',
@@ -9,7 +10,20 @@ import {WeatherService} from '../../shared/weather.service';
   providers: [CoordinateService]
 })
 export class WeatherPopupComponent implements OnInit, OnChanges {
-  public main: any;
+  main: any;
+  temp: number;
+  feels_like: string;
+  humidity: string;
+  wind_speed: number;
+  wind_direction: number;
+  pressure: number;
+  clouds: number;
+  sunrise: number;
+  sunset: number;
+
+  description: string;
+  id: number;
+  icon: string;
 
   constructor(private coordinateService: CoordinateService,
               private weatherService: WeatherService) { }
@@ -33,6 +47,14 @@ export class WeatherPopupComponent implements OnInit, OnChanges {
       this.weatherService.getCurrenttWeather(lat, lon)
         .subscribe(x => {
           this.main = x as any;
+          this.temp = this.main.main.temp;
+          for (let w of this.main.weather){
+            this.id = w.id;
+            this.description = w.description;
+            this.icon = w.icon;
+          }
         });
-    }
+
+  }
+
 }

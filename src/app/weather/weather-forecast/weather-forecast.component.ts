@@ -33,6 +33,7 @@ export class WeatherForecastComponent implements OnInit, OnChanges{
 
   ngOnChanges(simpleChanges: SimpleChanges): void {
     this.getWeather();
+
     this.weatherDate = [];
   }
 
@@ -54,7 +55,6 @@ export class WeatherForecastComponent implements OnInit, OnChanges{
         this.wind = x['list'].map(x => x.wind.speed);
         this.humidity = x['list'].map(x => x.main.humidity);
         const dates = x['list'].map(x => x.dt);
-
         this.DateConversion(dates);
         this.generateTemperatureChart();
         this.generateWindChart();

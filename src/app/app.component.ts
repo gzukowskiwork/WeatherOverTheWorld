@@ -16,9 +16,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.menuService.featureSelected
       .subscribe(
-      (feature: string) => {
-        this.loadedFeature = feature;
-      }
-    );
+        (feature: string) => {
+          this.loadedFeature = feature;
+        }
+      );
   }
 }
