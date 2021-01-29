@@ -10,11 +10,11 @@ import {Place} from '../../shared/models/place';
 export class PlaceListComponent implements OnInit {
   public places: Place[];
   placeId: number;
+  lastId: number;
   constructor(private  repository: PlacesRepositoryService) { }
 
   ngOnInit(): void {
     this.getAllPlaces();
-
   }
 
 
@@ -24,11 +24,16 @@ export class PlaceListComponent implements OnInit {
     this.repository.getPlaces(apiAddress)
       .subscribe(x => {
         this.places = x as Place[];
+        this.getLastId();
       });
   }
 
   setId(id: number): void {
     this.placeId = id;
+  }
+
+  getLastId(): void{
+    this.lastId = this.places[this.places.length - 1].id;
   }
 
   delete(id: number): void {

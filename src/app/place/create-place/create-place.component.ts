@@ -3,6 +3,7 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Place} from '../../shared/models/place';
 import {WeatherService} from '../../shared/weather.service';
 import {CoordinateService} from '../../shared/coordinate.service';
+import {PlacesRepositoryService} from '../../shared/places-repository.service';
 
 @Component({
   selector: 'app-create-place',
@@ -12,9 +13,11 @@ import {CoordinateService} from '../../shared/coordinate.service';
 export class CreatePlaceComponent implements OnInit, OnChanges {
   placeForm: FormGroup;
   place: Place;
+  value;
   @Input() coordinates: string;
 
-  constructor(private coordinateService: CoordinateService) { }
+  constructor(private coordinateService: CoordinateService,
+              private repository: PlacesRepositoryService) { }
 
   ngOnInit(): void {
   }
@@ -29,13 +32,27 @@ export class CreatePlaceComponent implements OnInit, OnChanges {
 
   private initializeForm(): void {
     this.placeForm = new FormGroup({
-      'Nazwa': new FormControl(null, Validators.required),
-      'Opis': new FormControl(null, Validators.required),
-      'X': new FormControl(this.showCoordinates().latitude, Validators.required),
-      'Y': new FormControl(this.showCoordinates().longitude, Validators.required),
+      'name': new FormControl(null, Validators.required),
+      'description': new FormControl(null, Validators.required),
+      'longitude': new FormControl(this.showCoordinates().latitude, Validators.required),
+      'latitude': new FormControl(this.showCoordinates().longitude, Validators.required)
     });
   }
 
   onSubmit(): void {
+    console.log(this.placeForm.value);
+    this.value = this.placeForm.value;
+    this.createPlace();
+  }
+
+  createPlace() {
+    const apiAddress = 'Place';
+    this.repository.createPlace(apiAddress, this.value)
+      .subscribe(x => {
+        this.place = x as Place;
+      });
+  }
+  clear(): void {
+    this.placeForm.reset();
   }
 }

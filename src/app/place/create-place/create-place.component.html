@@ -4,24 +4,32 @@
       <div class="row">
         <div class="row-sm-12 col-md-4 form-group">
           <label for="place-name">Nazwa</label>
-          <input id="place-name" type="text" class="form-control" formControlName="Nazwa">
+          <input id="place-name" type="text" class="form-control" formControlName="name">
           <span
-            *ngIf="!placeForm.get('Nazwa').valid && placeForm.get('Nazwa').touched" style="color: red">
+            *ngIf="!placeForm.get('name').valid && placeForm.get('name').touched" style="color: red">
             Pole wymagane
           </span>
         </div>
         <div class="row-sm-12 col-md-4 form-group">
           <label for="place-description">Opis</label>
-          <input id="place-description" type="text" class="form-control" formControlName="Opis">
+          <input id="place-description" type="text" class="form-control" formControlName="description">
+          <span
+            *ngIf="!placeForm.get('description').valid && placeForm.get('description').touched" style="color: red">
+            Pole wymagane
+          </span>
         </div>
         <div class="row-sm-12 col-md-4 form-group">
-          <label for="place-X">X</label>
-          <input id="place-X" type="text" class="form-control" formControlName="X" disabled>
+          <label for="place-X">Długość</label>
+          <input id="place-X" type="text" class="form-control" formControlName="longitude" disabled>
         </div>
         <div class="row-sm-12 col-md-4 form-group">
-          <label for="place-Y">Y</label>
-          <input id="place-Y" type="text" class="form-control" formControlName="Y" disabled>
+          <label for="place-Y">Szerokość</label>
+          <input id="place-Y" type="text" class="form-control" formControlName="latitude" disabled>
         </div>
+<!--        <div class="row-sm-12 col-md-4 form-group" hidden>-->
+<!--          <label for="place-id">id</label>-->
+<!--          <input id="place-id" type="text" class="form-control" formControlName="id" disabled>-->
+<!--        </div>-->
       </div>
       <hr>
       <div class="row">
@@ -32,7 +40,7 @@
             <div class="col-sm-12 col-md-4 form-group">
               <button class="btn btn-success" type="submit">Dodaj</button>
             </div>
-            <button class="btn btn-primary" type="button">Wyczyść</button>
+            <button class="btn btn-primary" type="button" (click)="clear()">Wyczyść</button>
           </div>
           <div class="col-sm-12 col-md-4 form-group">
           </div>

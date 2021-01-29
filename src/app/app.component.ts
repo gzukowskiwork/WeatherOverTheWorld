@@ -9,7 +9,7 @@ import {CoordinateService} from './shared/coordinate.service';
   providers: [MenuService, CoordinateService]
 })
 export class AppComponent implements OnInit {
-  loadedFeature = 'weather';
+  loadedFeature = 'myPlaces';
 
   constructor(private menuService: MenuService)  {}
 
