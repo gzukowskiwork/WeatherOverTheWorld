@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PlacesRepositoryService} from '../../shared/places-repository.service';
 import {Place} from '../../shared/models/place';
+import {map} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-place-list',
@@ -10,21 +12,45 @@ import {Place} from '../../shared/models/place';
 export class PlaceListComponent implements OnInit {
   public places: Place[];
   placeId: number;
-  lastId: number;
+  isFetching = false;
+  deleteOperationSuccessfulSubscription: Subscription;
   constructor(private  repository: PlacesRepositoryService) { }
 
   ngOnInit(): void {
     this.getAllPlaces();
+    this.deleteOperationSuccessfulSubscription = this.repository.deleteOperationSuccessful.subscribe(
+      isSuccessful => {
+        if (isSuccessful === true) {
+          this.getAllPlaces();
+        }else{
+          // todo add error handling
+        }
+      }
+    );
   }
 
 
 
   getAllPlaces(): void {
     const apiAddress = 'Place';
+    this.isFetching = true;
     this.repository.getPlaces(apiAddress)
+      .pipe(
+        map(response => {
+          const placeArray: Place[] = [];
+          for (const key in response){
+            if (response.hasOwnProperty(key)){
+              placeArray.push(response[key]);
+            }
+          }
+          return placeArray;
+        })
+      )
       .subscribe(x => {
-        this.places = x as Place[];
-        this.getLastId();
+        this.isFetching = false;
+        this.places = x;
+
+        // todo add error handling
       });
   }
 
@@ -32,13 +58,13 @@ export class PlaceListComponent implements OnInit {
     this.placeId = id;
   }
 
-  getLastId(): void{
-    this.lastId = this.places[this.places.length - 1].id;
-  }
-
   delete(id: number): void {
-    //TODO: make it work like it should work
     const apiAddress = 'Place';
-    this.repository.deletePlace(apiAddress, id).subscribe();
+    this.repository.deletePlace(apiAddress, id).subscribe(
+      x => {
+        this.repository._deleteOperationSuccesful.next(true);
+      }
+      // todo add error handling
+    );
   }
 }

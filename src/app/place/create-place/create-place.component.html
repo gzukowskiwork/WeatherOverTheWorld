@@ -12,7 +12,7 @@
         </div>
         <div class="row-sm-12 col-md-4 form-group">
           <label for="place-description">Opis</label>
-          <input id="place-description" type="text" class="form-control" formControlName="description">
+          <textarea id="place-description" type="text" class="form-control" formControlName="description"></textarea>
           <span
             *ngIf="!placeForm.get('description').valid && placeForm.get('description').touched" style="color: red">
             Pole wymagane
@@ -26,10 +26,6 @@
           <label for="place-Y">Szerokość</label>
           <input id="place-Y" type="text" class="form-control" formControlName="latitude" disabled>
         </div>
-<!--        <div class="row-sm-12 col-md-4 form-group" hidden>-->
-<!--          <label for="place-id">id</label>-->
-<!--          <input id="place-id" type="text" class="form-control" formControlName="id" disabled>-->
-<!--        </div>-->
       </div>
       <hr>
       <div class="row">
@@ -38,7 +34,7 @@
             <div class="col-sm-12 col-md-4 form-group">
             </div>
             <div class="col-sm-12 col-md-4 form-group">
-              <button class="btn btn-success" type="submit">Dodaj</button>
+              <button class="btn btn-success" type="submit"[disabled]="!placeForm.valid">Dodaj</button>
             </div>
             <button class="btn btn-primary" type="button" (click)="clear()">Wyczyść</button>
           </div>

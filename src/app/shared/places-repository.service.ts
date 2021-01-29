@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Place} from './models/place';
 
@@ -10,14 +10,19 @@ import {Place} from './models/place';
 })
 export class PlacesRepositoryService {
   baseUrl = 'https://localhost:5001';
+  _deleteOperationSuccesful: Subject<boolean> = new Subject<boolean>();
   constructor(private http: HttpClient) { }
 
+  get deleteOperationSuccessful(): Observable<boolean>{
+    return this._deleteOperationSuccesful.asObservable();
+  }
+
   getPlaces(route: string): Observable<object>{
-    return this.http.get(this.createRoute(this.baseUrl, route));
+    return this.http.get<Place>(this.createRoute(this.baseUrl, route));
   }
 
   getPlaceById(route: string, id: number): Observable<object>{
-    return this.http.get(this.createRouteWithParam(this.baseUrl, route, id));
+    return this.http.get<Place>(this.createRouteWithParam(this.baseUrl, route, id));
   }
 
   deletePlace(route: string, id: number): Observable<object>{
