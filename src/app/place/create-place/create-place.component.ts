@@ -50,6 +50,7 @@ export class CreatePlaceComponent implements OnInit, OnChanges {
     this.repository.createPlace(apiAddress, this.value)
       .subscribe(x => {
         this.place = x as Place;
+        this.repository._createOperationSuccessful.next(true);
       });
   }
   clear(): void {

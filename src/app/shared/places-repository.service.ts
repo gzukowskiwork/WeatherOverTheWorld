@@ -11,10 +11,16 @@ import {Place} from './models/place';
 export class PlacesRepositoryService {
   baseUrl = 'https://localhost:5001';
   _deleteOperationSuccesful: Subject<boolean> = new Subject<boolean>();
+  _createOperationSuccessful: Subject<boolean> = new Subject<boolean>();
+
   constructor(private http: HttpClient) { }
 
   get deleteOperationSuccessful(): Observable<boolean>{
     return this._deleteOperationSuccesful.asObservable();
+  }
+
+  get createOperationSuccessful(): Observable<boolean>{
+    return this._createOperationSuccessful.asObservable();
   }
 
   getPlaces(route: string): Observable<object>{

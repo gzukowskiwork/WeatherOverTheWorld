@@ -14,6 +14,7 @@ export class PlaceListComponent implements OnInit {
   placeId: number;
   isFetching = false;
   deleteOperationSuccessfulSubscription: Subscription;
+  createOperationSuccessfulSubscription: Subscription;
   constructor(private  repository: PlacesRepositoryService) { }
 
   ngOnInit(): void {
@@ -23,6 +24,16 @@ export class PlaceListComponent implements OnInit {
         if (isSuccessful === true) {
           this.getAllPlaces();
         }else{
+          // todo add error handling
+        }
+      }
+    );
+
+    this.createOperationSuccessfulSubscription = this.repository.createOperationSuccessful.subscribe(
+      isSuccessful => {
+        if (isSuccessful === true) {
+          this.getAllPlaces();
+        } else {
           // todo add error handling
         }
       }
