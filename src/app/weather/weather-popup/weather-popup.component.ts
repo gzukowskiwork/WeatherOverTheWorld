@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, OnChanges} from '@angular/core';
-import {CoordinateService} from '../../shared/coordinate.service';
-import {WeatherService} from '../../shared/weather.service';
+import {CoordinateService} from '../../_shared/coordinate.service';
+import {WeatherService} from '../../_shared/weather.service';
 
 
 @Component({

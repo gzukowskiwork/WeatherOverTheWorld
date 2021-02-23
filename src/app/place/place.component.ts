@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {CoordinateService} from '../shared/coordinate.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {CoordinateService} from '../_shared/coordinate.service';
 
 @Component({
     selector: 'app-place',
@@ -27,5 +27,9 @@ export class PlaceComponent  implements OnInit{
           this.coordinates = coords;
         }
       );
+    }
+
+    hideComponentEventHandler($event: any): void{
+      this.show = $event;
     }
   }

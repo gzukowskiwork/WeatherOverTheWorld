@@ -29,16 +29,13 @@
       </div>
       <hr>
       <div class="row">
-        <div class="col-xs-12 col-lg-12">
+        <div class="col-sm-12 col-md-12">
           <div class="row">
             <div class="col-sm-12 col-md-4 form-group">
-            </div>
-            <div class="col-sm-12 col-md-4 form-group">
               <button class="btn btn-success" type="submit"[disabled]="!placeForm.valid">Dodaj</button>
+              <button class="btn btn-primary" type="button" (click)="clear()">Wyczyść</button>
+              <button class="btn btn-secondary" type="button" (click)="onHideComponent()">Ukryj</button>
             </div>
-            <button class="btn btn-primary" type="button" (click)="clear()">Wyczyść</button>
-          </div>
-          <div class="col-sm-12 col-md-4 form-group">
           </div>
         </div>
       </div>

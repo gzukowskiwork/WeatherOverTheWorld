@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PlacesRepositoryService} from '../../shared/places-repository.service';
-import {Place} from '../../shared/models/place';
+import {PlacesRepositoryService} from '../../_shared/places-repository.service';
+import {Place} from '../../_shared/models/place';
 import {map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 

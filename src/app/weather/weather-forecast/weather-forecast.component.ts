@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
-import {LoggingService} from '../../shared/logging.service';
-import {CoordinateService} from '../../shared/coordinate.service';
-import {WeatherService} from '../../shared/weather.service';
+import {LoggingService} from '../../_shared/logging.service';
+import {CoordinateService} from '../../_shared/coordinate.service';
+import {WeatherService} from '../../_shared/weather.service';
 import { EChartsOption } from 'echarts';
 
 @Component({

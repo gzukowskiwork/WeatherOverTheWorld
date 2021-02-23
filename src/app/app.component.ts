@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { MenuService } from './header/menu.service';
-import {CoordinateService} from './shared/coordinate.service';
+import {CoordinateService} from './_shared/coordinate.service';
 
 @Component({
   selector: 'app-root',

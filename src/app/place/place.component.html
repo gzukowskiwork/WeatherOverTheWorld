@@ -1,2 +1,7 @@
 <app-place-list></app-place-list>
-<app-create-place *ngIf="show" [coordinates]="coordinates"></app-create-place>
+<app-create-place
+  (showEvent)="hideComponentEventHandler($event)"
+  *ngIf="show"
+  [coordinates]="coordinates"
+  >
+</app-create-place>

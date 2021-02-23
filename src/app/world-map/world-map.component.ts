@@ -9,7 +9,7 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 import { MenuService } from '../header/menu.service';
-import {CoordinateService} from '../shared/coordinate.service';
+import {CoordinateService} from '../_shared/coordinate.service';
 
 @Component({
   selector: 'app-world-map',

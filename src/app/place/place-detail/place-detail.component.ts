@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Place} from '../../shared/models/place';
-import {PlacesRepositoryService} from '../../shared/places-repository.service';
+import {Place} from '../../_shared/models/place';
+import {PlacesRepositoryService} from '../../_shared/places-repository.service';
 
 @Component({
   selector: 'app-place-detail',

@@ -1,9 +1,9 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Place} from '../../shared/models/place';
-import {WeatherService} from '../../shared/weather.service';
-import {CoordinateService} from '../../shared/coordinate.service';
-import {PlacesRepositoryService} from '../../shared/places-repository.service';
+import {Place} from '../../_shared/models/place';
+import {WeatherService} from '../../_shared/weather.service';
+import {CoordinateService} from '../../_shared/coordinate.service';
+import {PlacesRepositoryService} from '../../_shared/places-repository.service';
 
 @Component({
   selector: 'app-create-place',
@@ -14,6 +14,7 @@ export class CreatePlaceComponent implements OnInit, OnChanges {
   placeForm: FormGroup;
   place: Place;
   value;
+  @Output() showEvent = new EventEmitter<boolean>();
   @Input() coordinates: string;
 
   constructor(private coordinateService: CoordinateService,
@@ -32,10 +33,10 @@ export class CreatePlaceComponent implements OnInit, OnChanges {
 
   private initializeForm(): void {
     this.placeForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'description': new FormControl(null, Validators.required),
-      'longitude': new FormControl(this.showCoordinates().latitude, Validators.required),
-      'latitude': new FormControl(this.showCoordinates().longitude, Validators.required)
+      name: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
+      longitude: new FormControl(this.showCoordinates().latitude, Validators.required),
+      latitude: new FormControl(this.showCoordinates().longitude, Validators.required)
     });
   }
 
@@ -55,5 +56,9 @@ export class CreatePlaceComponent implements OnInit, OnChanges {
   }
   clear(): void {
     this.placeForm.reset();
+  }
+
+  onHideComponent(): void {
+    this.showEvent.emit(false);
   }
 }
