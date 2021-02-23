@@ -35,6 +35,10 @@ export class PlacesRepositoryService {
     return this.http.delete(this.createRouteWithParam(this.baseUrl, route, id));
   }
 
+  updatePlace(route: string, place: Place): Observable<object>{
+    return this.http.put(this.createRouteWithParam(this.baseUrl, route, place.id), place );
+  }
+
   createPlace(route: string, place: Place): Observable<object>{
     return this.http.post(this.createRoute(this.baseUrl, route), place);
   }

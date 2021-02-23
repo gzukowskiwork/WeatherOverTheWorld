@@ -16,6 +16,7 @@ import { CityComponent } from './city/city.component';
 import { PlaceDetailComponent } from './place/place-detail/place-detail.component';
 import { ReactiveFormsModule} from '@angular/forms';
 import { CreatePlaceComponent } from './place/create-place/create-place.component';
+import { EditPlaceComponent } from './place/edit-place/edit-place.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CreatePlaceComponent } from './place/create-place/create-place.componen
     PlaceComponent,
     CityComponent,
     PlaceDetailComponent,
-    CreatePlaceComponent
+    CreatePlaceComponent,
+    EditPlaceComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Place} from '../../_shared/models/place';
 import {PlacesRepositoryService} from '../../_shared/places-repository.service';
+import {element} from 'protractor';
 
 @Component({
   selector: 'app-place-detail',
@@ -9,11 +10,14 @@ import {PlacesRepositoryService} from '../../_shared/places-repository.service';
 })
 export class PlaceDetailComponent implements OnInit, OnChanges {
   public place: Place;
+  @Output() hideEvent = new EventEmitter<boolean>();
   @Input() id: number;
+  @Input() idOfPlaces: number[] = [];
 
   constructor(private repository: PlacesRepositoryService) { }
 
   ngOnInit(): void {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -26,5 +30,9 @@ export class PlaceDetailComponent implements OnInit, OnChanges {
       .subscribe(x => {
         this.place = x as Place;
       });
+  }
+
+  onHideComponent(): void {
+    this.hideEvent.emit(false);
   }
 }

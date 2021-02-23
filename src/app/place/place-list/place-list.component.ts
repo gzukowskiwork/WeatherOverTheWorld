@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {PlacesRepositoryService} from '../../_shared/places-repository.service';
 import {Place} from '../../_shared/models/place';
 import {map} from 'rxjs/operators';
@@ -10,8 +10,11 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./place-list.component.css']
 })
 export class PlaceListComponent implements OnInit {
-  public places: Place[];
+  public places: Place[] = [];
+  placeIds: number[] = [];
   placeId: number;
+  showEdit = false;
+  showDetails = false;
   isFetching = false;
   deleteOperationSuccessfulSubscription: Subscription;
   createOperationSuccessfulSubscription: Subscription;
@@ -19,6 +22,7 @@ export class PlaceListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllPlaces();
+
     this.deleteOperationSuccessfulSubscription = this.repository.deleteOperationSuccessful.subscribe(
       isSuccessful => {
         if (isSuccessful === true) {
@@ -38,9 +42,9 @@ export class PlaceListComponent implements OnInit {
         }
       }
     );
+
+
   }
-
-
 
   getAllPlaces(): void {
     const apiAddress = 'Place';
@@ -61,11 +65,14 @@ export class PlaceListComponent implements OnInit {
         this.isFetching = false;
         this.places = x;
 
+        this.populateIds();
         // todo add error handling
       });
   }
 
-  setId(id: number): void {
+  setIdDetails(id: number): void {
+    this.showDetails = true;
+    this.showEdit = false;
     this.placeId = id;
   }
 
@@ -77,5 +84,23 @@ export class PlaceListComponent implements OnInit {
       }
       // todo add error handling
     );
+  }
+
+  hideEventHandler($event: boolean): void {
+    this.showDetails = $event;
+    this.showEdit = $event;
+  }
+
+  populateIds(): void{
+    for (const place of this.places){
+      console.log(place.id);
+      this.placeIds.push(place.id);
+    }
+  }
+
+  setIdEdit(id: number): void {
+    this.showEdit = true;
+    this.showDetails = false;
+    this.placeId = id;
   }
 }

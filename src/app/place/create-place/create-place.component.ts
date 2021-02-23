@@ -44,6 +44,7 @@ export class CreatePlaceComponent implements OnInit, OnChanges {
     console.log(this.placeForm.value);
     this.value = this.placeForm.value;
     this.createPlace();
+    this.showEvent.emit(false);
   }
 
   createPlace(): void {
