@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Place} from '../../_shared/models/place';
-import {WeatherService} from '../../_shared/weather.service';
 import {CoordinateService} from '../../_shared/coordinate.service';
 import {PlacesRepositoryService} from '../../_shared/places-repository.service';
 
@@ -41,15 +40,15 @@ export class CreatePlaceComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    console.log(this.placeForm.value);
     this.value = this.placeForm.value;
-    this.createPlace();
+    this.createPlace(this.value);
     this.showEvent.emit(false);
   }
 
-  createPlace(): void {
+  createPlace(dupa: any): void {
+    console.log(dupa)
     const apiAddress = 'Place';
-    this.repository.createPlace(apiAddress, this.value)
+    this.repository.createPlace(apiAddress, dupa)
       .subscribe(x => {
         this.place = x as Place;
         this.repository._createOperationSuccessful.next(true);

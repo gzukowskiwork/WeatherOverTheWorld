@@ -29,6 +29,8 @@ export class PlaceDetailComponent implements OnInit, OnChanges {
     this.repository.getPlaceById(apiAddress, id)
       .subscribe(x => {
         this.place = x as Place;
+        console.log(x)
+        console.log(this.place)
       });
   }
 

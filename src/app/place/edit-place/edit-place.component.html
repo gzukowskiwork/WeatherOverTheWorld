@@ -2,6 +2,29 @@
 {{id}}
 {{place.name}}
 {{place.description}}
+{{place.latitude}}
+<div class="row">
+  <form [formGroup]="editPlaceForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="row-sm-12 col-md-4 form-group">
+        <label for="place-name">Nazwa</label>
+        <input id="place-name" type="text" class="form-control" formControlName="name" >
+      </div>
+      <div class="row-sm-12 col-md-4 form-group">
+        <label for="place-description">Opis</label>
+        <textarea id="place-description" type="text" class="form-control" formControlName="description"></textarea>
+      </div>
+      <div class="row-sm-12 col-md-4 form-group">
+        <label for="place-X">Długość</label>
+        <input id="place-X" type="text" class="form-control" formControlName="longitude" disabled >
+      </div>
+      <div class="row-sm-12 col-md-4 form-group">
+        <label for="place-Y">Szerokość</label>
+        <input id="place-Y" type="text" class="form-control" formControlName="latitude" disabled >
+      </div>
+    </div>
+  </form>
+</div>
 <div>
   <button class="btn btn-secondary" (click)="onHideComponent()">Ukryj</button>
 </div>

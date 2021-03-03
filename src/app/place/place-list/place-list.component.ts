@@ -16,6 +16,9 @@ export class PlaceListComponent implements OnInit {
   showEdit = false;
   showDetails = false;
   isFetching = false;
+  pageNumber: number[] = [1, 2, 3, 4];
+  pageSize: number[] = [2, 5, 10];
+  size: number = 5;
   deleteOperationSuccessfulSubscription: Subscription;
   createOperationSuccessfulSubscription: Subscription;
   constructor(private  repository: PlacesRepositoryService) { }
@@ -42,12 +45,10 @@ export class PlaceListComponent implements OnInit {
         }
       }
     );
-
-
   }
 
   getAllPlaces(): void {
-    const apiAddress = 'Place';
+    const apiAddress = 'Place?pageNumber=1&pageSize=' + this.size;
     this.isFetching = true;
     this.repository.getPlaces(apiAddress)
       .pipe(
@@ -102,5 +103,10 @@ export class PlaceListComponent implements OnInit {
     this.showEdit = true;
     this.showDetails = false;
     this.placeId = id;
+  }
+
+  setPageSize(num: number): void {
+    this.size = num;
+    this.getAllPlaces();
   }
 }
