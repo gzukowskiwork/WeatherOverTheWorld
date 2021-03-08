@@ -22,7 +22,7 @@ export class WorldMapComponent implements OnInit {
   showForecast = false;
   hdms: string;
   layer: VectorLayer;
-  feature: string;
+  feature: string = 'myPlaces';
 
   private geoJsonUrl = 'https://raw.githack.com/drei01/geojson-world-cities/master/cities.geojson';
   private ShowCities: boolean;

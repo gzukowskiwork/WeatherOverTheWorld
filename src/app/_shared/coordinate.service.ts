@@ -16,10 +16,11 @@ export class CoordinateService {
       const coordinatesWithoutSpace = coordinateString.replace(/\s+/g, '');
       const array = coordinatesWithoutSpace.split(',');
       array.reverse();
+      console.log(array);
       return {
         longitude: array[0],
         latitude: array[1]
       };
-    }
+     }
   }
 }

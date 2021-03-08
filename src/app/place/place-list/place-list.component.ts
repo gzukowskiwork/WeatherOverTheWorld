@@ -18,7 +18,7 @@ export class PlaceListComponent implements OnInit {
   isFetching = false;
   pageNumber: number[] = [1, 2, 3, 4];
   pageSize: number[] = [2, 5, 10];
-  size: number = 5;
+  size: number = 10;
   deleteOperationSuccessfulSubscription: Subscription;
   createOperationSuccessfulSubscription: Subscription;
   constructor(private  repository: PlacesRepositoryService) { }
@@ -65,8 +65,6 @@ export class PlaceListComponent implements OnInit {
       .subscribe(x => {
         this.isFetching = false;
         this.places = x;
-
-        this.populateIds();
         // todo add error handling
       });
   }
@@ -90,13 +88,6 @@ export class PlaceListComponent implements OnInit {
   hideEventHandler($event: boolean): void {
     this.showDetails = $event;
     this.showEdit = $event;
-  }
-
-  populateIds(): void{
-    for (const place of this.places){
-      console.log(place.id);
-      this.placeIds.push(place.id);
-    }
   }
 
   setIdEdit(id: number): void {

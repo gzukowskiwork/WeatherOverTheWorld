@@ -12,7 +12,7 @@ import {PlacesRepositoryService} from '../../_shared/places-repository.service';
 export class CreatePlaceComponent implements OnInit, OnChanges {
   placeForm: FormGroup;
   place: Place;
-  value;
+
   @Output() showEvent = new EventEmitter<boolean>();
   @Input() coordinates: string;
 
@@ -40,13 +40,13 @@ export class CreatePlaceComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    this.value = this.placeForm.value;
-    this.createPlace(this.value);
+    this.createPlace(this.placeForm.value);
     this.showEvent.emit(false);
   }
 
   createPlace(dupa: any): void {
-    console.log(dupa)
+    dupa.latitude = parseFloat( dupa.latitude);
+    dupa.longitude = parseFloat( dupa.longitude);
     const apiAddress = 'Place';
     this.repository.createPlace(apiAddress, dupa)
       .subscribe(x => {

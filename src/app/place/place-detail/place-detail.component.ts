@@ -29,12 +29,17 @@ export class PlaceDetailComponent implements OnInit, OnChanges {
     this.repository.getPlaceById(apiAddress, id)
       .subscribe(x => {
         this.place = x as Place;
-        console.log(x)
-        console.log(this.place)
+        console.log(x);
+        console.log(this.place.latitude);
       });
   }
 
+
   onHideComponent(): void {
     this.hideEvent.emit(false);
+  }
+
+  onConsole() {
+    console.log(this.place);
   }
 }
